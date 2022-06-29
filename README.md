@@ -69,6 +69,10 @@ hull\_ne: The points for the outer convex hull of the nth band. Note that hull_0
 * Nn: Number of points within the nth lesing band.
 * limn: The grids are cartesian and symmetric around zero. This data sets tells the limits of the grid. 
 
+This image is produced in the example code:
+
+<img src='LB.png' width="400" align="center">
+
 #### Ray Tracing: 
 
 To compute the equitorial radius, angle, and emission time of a photon, we perform a backward ray-tracing from the observer plane. By running the following, we evaluate the source radius, angle, and time within the grid from each lensing bands:
@@ -82,6 +86,10 @@ The result will be stored in a HDF5 file that contains source radius, angle, tim
 * phin: The value of the \phi Boyer-Lindquist coordinate for the nth lensing band. It follows the order of the lensing band. 
 * signn: The sign of the radial momentum of the emitted photon in the nth lensing band. 
 
+This image is produced in the example code:
+
+<img src='Rays.png' width="400" align="center">
+
 #### Images: 
 
 ##### Stationary and axisymetric source profiles: 
@@ -93,6 +101,10 @@ Once the lensing bands and the rays have been computed, an image can be produced
 The datasets inside the resulting file are:
 
 * bghtsn: The intensity at each point in the image.
+
+This image is produced in the example code:
+
+<img src='BHImage.png' width="400" align="center">
 
 You can add a custom radial profile in <em>rprofs\_f.py </em>, and modify <em>intensity\_f.py</em> accordingly.
 
@@ -114,7 +126,7 @@ to produce images or a set of images, respectively. Images can be produced by us
 
 This gif is produced in the example code:
 
-<img src='BHMovie.gif'>
+<img src='BHMovie.gif' width="400" align="center">
 
 #### Visibility Amplitudes:
 
@@ -131,6 +143,10 @@ If in <em>params.py</em> radonfile=1, the HD5F file also contain these two datas
 
 * radon: The resulting radon transformation. 
 * x_radon: The axis values of the projection. 
+
+This image is produced in the example code:
+
+<img src='Visamp.png' width="400" align="center">
 
 #### Polarization:
 
