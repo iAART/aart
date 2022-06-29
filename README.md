@@ -14,7 +14,7 @@ Last updated: 06.29.2022
 
 * **Analytical Ray-Tracing**: The main functions are located in  <em>raytracing_f</em>: For a given location in the Bardeen's plane ($\alpha,\beta$), it computes where it lands in the equatorial plane ($t,r,\theta=\pi/2,\phi$) in Boyer-Lindquist coordinates. The implementatio does it per lensing band. 
 
-* **Images**: The source functions are located in <em>image.py</em>: It computes an image for a given analytical illumination profile specified in <em>rprofs_f.py</em>, if it is purely radial and analytical, or as an external file. The current version of the code supports inoisy (2011.07151) outputs, where the external file is an HDF5 with an specific structure. In this repo you can find a low-resolution example. 
+* **Images**: The source functions are located in <em>image.py</em>: It computes an image for a given analytical illumination profile specified in <em>rprofs_f.py</em>, if it is purely radial and analytical, or as an external file. The current version of the code supports inoisy (<https://arxiv.org/abs/2011.07151>) outputs, where the external file is an HDF5 with an specific structure. In this repo you can find a low-resolution example. 
 
 * **Visibility Amplitudes**: The main functions are located in <em>visamp_f.py</em>: It computes the visibility amplitudes for given intensities over $n$ lensing bands. 
 
