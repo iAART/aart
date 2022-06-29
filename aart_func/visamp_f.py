@@ -23,6 +23,9 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
         R1 = interpolate.interp1d(radon1[1],radon1[0],fill_value=0, bounds_error=False,kind="linear")
         R2 = interpolate.interp1d(radon2[1],radon2[0],fill_value=0, bounds_error=False,kind="linear")
 
+        dx=np.min([dx0,dx1,dx2])
+        xvalues =np.round(np.arange(-limits,limits+dx, dx),4)
+
         R=R0(xvalues)+R1(xvalues)+R2(xvalues)
 
         # Compute 1D FFT of the projection, shift and take modulus
@@ -46,7 +49,7 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
 
         print("V(0)= ",norm)
         
-        filename=path+"Visamp_%s_%s_a_%s_i_%s_%s.h5"%(lbs,radonangle,spin_case,i_case,Ncut)
+        filename=path+"Visamp_%s_a_%s_i_%s_%s.h5"%(radonangle,spin_case,i_case,Ncut)
         
         h5f = h5py.File(filename, 'w')
 

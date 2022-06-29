@@ -4,9 +4,9 @@ print("\nThanks for using AART")
 print("Copyright (C) 2022, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 
 #BH's Spin
-spin_case=0.5
+spin_case=0.94
 #Observer's inclination  
-i_case=60
+i_case=17
 #Disk's inclination       
 i_disk=90    
 
@@ -29,14 +29,14 @@ bvapp=0
 p_image=1
 limits=25
 #Resolution for the n=0 image [M]
-dx0 =0.2
+dx0 =0.02
 #Resolution for the n=1 image [M]
-dx1 =0.2
+dx1 =0.02
 #Resolution for the n=2 image [M]
-dx2 =0.2
+dx2 =0.02
 
 # Projection angles for the radon transformation
-radonangles=range(0,180,5)
+radonangles=[0,90]
 
 # Image treatment 
 fudge=1.5 #Fudge factor (For n>0)
@@ -53,20 +53,22 @@ i_frame=0
 # Initial and final times in units of M
 i_tM=0  
 #Makes sense when is less than the inosy temporal length 
-f_tM=1024	
+f_tM=64	
 #Number of snapshots in that range    
-snapshots=100
+snapshots=64
 
 # SU's parameters for the envelope 
-# Just used for the profiles computed within AART 
+# Just used for the profiles computed within AART
+isco = rms(spin_case)
+
 gammap=-3/2
 mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
+speed_p=1
+cutoff_p=limits-1
 
 #The power of the redshift factor
 gfactor=3
-
-# # # To store the data # # # 
 
 # Max baseline in G\lambda
 maxbaseline=550 
@@ -79,8 +81,6 @@ nthreads=4
 
 thetao=i_case*np.pi/180
 thetad=i_disk*np.pi/180
-
-isco = rms(spin_case)
 
 Gc=6.67e-11 # G constant [m^3 kg^-1 s^-2]
 cc= 2.99792458e8 # c constant [m/s]
@@ -103,7 +103,7 @@ path = './Results/'
 isExist = os.path.exists(path)
 if not isExist:
   os.makedirs(path)
-  print("A directory was created to store the results")
+  print("A directory (Results) was created to store the results")
 
 '''
 MIT license
