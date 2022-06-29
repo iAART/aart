@@ -112,7 +112,9 @@ to produce images or a set of images, respectively. Images can be produced by us
 
 * bghtsn: The intensity at each point in the image. When several snapshots are produced, these datasets will have three dimensions, where the first one denotes the time. 
 
+This gif is produced in the example code:
 
+<img src='BHMovie.gif'>
 
 #### Visibility Amplitudes:
 
