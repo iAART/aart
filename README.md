@@ -4,7 +4,15 @@ AART is a numerical framework that exploits the integrability properties of the 
 
 The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code the equations are mentioned as Pi Eq. N, which means Eq. N in Ref. [i]. 
 
-Feel free to use this code (with attribution to Ref. [1]) for your own research or to produce visualizations for your next presentation! 
+The use of AART in scientific publications must be properly acknowledged. Please cite:
+
+	Cardenas-Avendano, A., Zhu, Hengrui & Lupsasca, A. 
+	Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
+	[arXiv:XXX]
+
+We also request that AART modifications or extensions leading to a scientific publication be made public as free software. 
+
+<center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
 Last updated: 06.29.2022
 
