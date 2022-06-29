@@ -6,7 +6,7 @@ The code, described in detail in Ref. [1], implements all the relevant equations
 
 The use of AART in scientific publications must be properly acknowledged. Please cite:
 
-	Cardenas-Avendano, A., Zhu, Hengrui & Lupsasca, A. 
+	Cardenas-Avendano, A., Zhu, H. & Lupsasca, A. 
 	Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
 	[arXiv:XXX]
 
@@ -183,7 +183,7 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## References ##
 
-[1] Cardenas-Avendano, A., Zhu, Hengrui & Lupsasca, A. Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
+[1] Cardenas-Avendano, A., Zhu, H. & Lupsasca, A. Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
 
 [2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101(4), 044031.(arXiv:1910.12873)
 
