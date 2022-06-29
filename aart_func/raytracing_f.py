@@ -12,7 +12,7 @@ def conserved_quantities(alpha,beta,theta_o,a):
 
     :returns: angular momentum and carter constant
     """
-    # Eqs. (58-59 P1)
+    # Eqs. (58-59 P2)
     lam = -alpha*np.sin(theta_o)
     eta = (alpha**2-a**2)*np.cos(theta_o)**2+beta**2
     return(lam,eta)
@@ -42,7 +42,7 @@ def radial_turning_points(alpha,beta,lam,eta,a):
 
     :returns: the four roots for the radial turning points r1,r2,r3,r4. 
     '''
-    # Eqs. (A1-A5 P1)
+    # Eqs. (A1-A5 P2)
     A = a**2-eta-lam**2
     B = 2*(eta+(lam-a)**2)
     C = -a**2*eta
@@ -50,16 +50,16 @@ def radial_turning_points(alpha,beta,lam,eta,a):
     P = -A**2/12-C
     Q = -A/3*((A/6)**2-C)-B**2/8
     
-    # Eqs. (A7 P1)
+    # Eqs. (A7 P2)
     pp = -Q/2+np.sqrt((P/3)**3+(Q/2)**2+0*1j)
     mm = -Q/2-np.sqrt((P/3)**3+(Q/2)**2+0*1j)
     w_p = cuberoot(pp)
     w_m = cuberoot(mm)
 
-    # Eqs. (A6 P1)
+    # Eqs. (A6 P2)
     z = np.sqrt((w_p+w_m)/2 - A/6)
     
-    # Eqs. (A8 P1)
+    # Eqs. (A8 P2)
     r1 = - z - np.sqrt(-A/2-z**2+B/4/z)
     r2 = - z + np.sqrt(-A/2-z**2+B/4/z)
     r3 = + z - np.sqrt(-A/2-z**2-B/4/z)
@@ -79,12 +79,12 @@ def angular_turning_points(alpha,beta,lam,eta,a):
     :returns: u_p, u_m for evaluating the angular integrals;
               and theta_p, theta_m the angular turning points 
     '''
-    # Eqs. (11 P1)
+    # Eqs. (11 P2)
     Delta_theta = (1-(eta+lam**2)/a**2)/2
     u_p = Delta_theta+np.sqrt(Delta_theta**2+eta/a**2)
     u_m = Delta_theta-np.sqrt(Delta_theta**2+eta/a**2)
     
-    # Eqs. (10 P1)
+    # Eqs. (10 P2)
     theta_p = np.arccos(-np.sqrt(u_p))
     theta_m = np.arccos(np.sqrt(u_p))
     
@@ -93,7 +93,7 @@ def angular_turning_points(alpha,beta,lam,eta,a):
 
 def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     '''
-    Computes angular path integrals along the photon trajectories (P1 section II.A)
+    Computes angular path integrals along the photon trajectories (P2 section II.A)
     :param mbar: the number of angular turning points encountered along the trajectory
     :param beta: y coordinate (parallel to the projected spin axis)
     :param u_p,u_m: to construct elliptical parameter for the integrals
@@ -107,14 +107,14 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     
     k = u_p/u_m
     
-    # Eqs. (16 P1)
+    # Eqs. (16 P2)
     K = ellipk(k)
     E_prime = (ellipe(k)-K)/2/k
     PI = ellippi(u_p,np.pi/2,k)
     
     arg = (np.arcsin(np.cos(theta_o)/np.sqrt(u_p)))
     
-    # Eqs. (12-14 P1)
+    # Eqs. (12-14 P2)
     F_o = ellipf(arg,k)
     E_prime_o = (ellipeinc(arg,k)-F_o)/2/k
     PI_o = ellippi(u_p,arg,k)
@@ -125,7 +125,7 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     H_beta[beta>=0] = 1
     m = mbar+H_beta
 
-    # Eqs. (20-22 P1), where the source terms are zero as the emission is from the equitorial plane
+    # Eqs. (20-22 P2), where the source terms are zero as the emission is from the equitorial plane
     G_theta = (2*m*K-pm_o*F_o)/a/np.sqrt(-u_m)
     G_phi = (2*m*PI-pm_o*PI_o)/a/np.sqrt(-u_m)
     G_t = -2*u_p*(2*m*E_prime-pm_o*E_prime_o)/a/np.sqrt(-u_m)
@@ -142,7 +142,7 @@ def source_radius2(r1,r2,r3,r4,G_theta,alpha):
 
     :returns:  radius of the equitorial source
     '''
-    # Eqs. (31-32 P1)
+    # Eqs. (31-32 P2)
     r31 = (r3-r1)
     r32 = (r3-r2)
     r41 = (r4-r1)
@@ -151,7 +151,7 @@ def source_radius2(r1,r2,r3,r4,G_theta,alpha):
 
     k2 = r32*r41/r31/r42
 
-    # Eqs. (30 P1)
+    # Eqs. (30 P2)
     F2 = ellipf(np.arcsin(np.sqrt(r31/r41).real),(k2).real)
     sn_square = np.square(ellipj(1/2*np.sqrt(r31*r42).real*G_theta-F2, (k2).real)[0])
     rs2 = np.nan_to_num((r4*r31-r3*r41*sn_square)/(r31-r41*sn_square))
@@ -174,17 +174,17 @@ def source_radius3(r1,r2,r3,r4,G_theta,alpha):
     r42 = (r4-r2)
     r21 = (r2-r1)
 
-    #Eqs (B57 P2)
+    #Eqs (B57 P3)
     A = np.sqrt(r32*r42).real
     B = np.sqrt(r31*r41).real
-    #Eq (B59 P2)
+    #Eq (B59 P3)
     k3 = ((A+B)**2 - r21**2)/(4*A*B)
 
     F3 = ellipf(np.arccos((A-B)/(A+B)),(k3).real)
 
-    # Eqs. (B74-75 P1)
+    # Eqs. (B74-75 P2)
     cn = ellipj(np.sqrt(A*B)*G_theta-F3,(k3).real)[1]
-    #Eq (B75 P2)
+    #Eq (B75 P3)
     rs3 = np.nan_to_num(((B*r2-A*r1)+(B*r2+A*r1)*cn)/((B-A)+(B+A)*cn))
     return(rs3)
 
@@ -198,14 +198,14 @@ def radial_potential(r,a,lam,eta):
 
     :return: value of the radial potential
     """
-    #Eqs (2,5 P1)
+    #Eqs (2,5 P2)
     Delta = r**2-2*r+a**2
     return((r**2+a**2-a*lam)**2-Delta*(eta+(lam-a)**2))
 
 #(indefinite) auxiliary functions for antiderivatives of the three radial integral in radial case 2.
 def radial_case2_antiderivative(r,r1,r2,r3,r4,a,lam,eta):
     '''
-    Computes auxiliary integrals for the antiderivatives of the radial path integrals in Type II radial trajectory (P2 Appendix B.2)
+    Computes auxiliary integrals for the antiderivatives of the radial path integrals in Type II radial trajectory (P3 Appendix B.2)
     :param r: radius of the equitorial photon source
     :param r1-r4: radial turning points
     :param a: spin of black hole
@@ -215,7 +215,7 @@ def radial_case2_antiderivative(r,r1,r2,r3,r4,a,lam,eta):
     :returns I0,I1,I2,Ip,Im: values of the auxiliary integrals, combinations of which yeilds the antiderivatives
     '''
     
-    #Eqs (3 P1)
+    #Eqs (3 P2)
     r_m = 1-np.sqrt(1-a**2)
     r_p = 1+np.sqrt(1-a**2)
     
@@ -231,14 +231,14 @@ def radial_case2_antiderivative(r,r1,r2,r3,r4,a,lam,eta):
     rp4 = (r_p-r4)
     rm4 = (r_m-r4)
     
-    #Eqs (B13 P2)
+    #Eqs (B13 P3)
     k = r32*r41/r31/r42
     
-    #Eqs (B35 P2)
+    #Eqs (B35 P3)
     x2 = np.sqrt((r-r4)*r31/(r-r3)/r41)
     arg = np.arcsin(x2)
 
-    #Eqs (B40-43 P2)
+    #Eqs (B40-43 P3)
     F2 = 2/np.sqrt(r31*r42)*ellipf(arg.real,k.real)
     E2 = np.sqrt(r31*r42)*ellipeinc(arg.real,k.real)
     PI21 = 2/np.sqrt(r31*r42)*ellippi((r41/r31).real,arg.real,k.real)
@@ -246,7 +246,7 @@ def radial_case2_antiderivative(r,r1,r2,r3,r4,a,lam,eta):
     PI2m = 2/np.sqrt(r31*r42)*r43/rm3/rm4*ellippi((rm3*r41/rm4/r31).real,arg.real,k.real)
     
     
-    #Eqs (B36-9 P2)
+    #Eqs (B36-9 P3)
     I0 = F2
     I1 = r3*F2 + r43*PI21
     I2 = sqrt(radial_potential(r,a,lam,eta))/(r-r3)-(r1*r4+r2*r3)/2*F2-E2
@@ -269,7 +269,7 @@ def radial_case2(rs,ro,r1,r2,r3,r4,a,beta,lam,eta,redshift_sign):
 
     :returns I0,I1,I2,Ip,Im: values of the definite auxiliary integrals.  
     """
-    #Eqs (B25 P2)
+    #Eqs (B25 P3)
     #where w = v_r evaluated at the source
     w = redshift_sign
     w[w==1] = 0
@@ -283,7 +283,7 @@ def radial_case2(rs,ro,r1,r2,r3,r4,a,beta,lam,eta,redshift_sign):
     #observer terms
     I0o,I1o,I2o,Ipo,Imo = radial_case2_antiderivative(ro,r1,r2,r3,r4,a,lam,eta)
 
-    #Eqs (B25 P2)
+    #Eqs (B25 P3)
     #analagous to that in function "angular_integrals"
     I0 = I0o-I0s + 2*w*(I0s-I0t)
     I1 = I1o-I1s + 2*w*(I1s-I1t)
@@ -296,14 +296,14 @@ def radial_case2(rs,ro,r1,r2,r3,r4,a,beta,lam,eta,redshift_sign):
 #(indefinite) antiderivatives of the three radial integral in radial case 3.
 def radial_case3_antiderivative(r,r1,r2,r3,r4,a):
     '''
-    Computes auxiliary integrals for the antiderivatives of the radial path integrals in Type III radial trajectory (P2 Appendix B.3)
+    Computes auxiliary integrals for the antiderivatives of the radial path integrals in Type III radial trajectory (P3 Appendix B.3)
     :param r: radius of the equitorial photon source
     :param r1-r4: radial turning points
     :param a: spin of black hole
 
     :returns I0,I1,I2,Ip,Im: values of the auxiliary integrals, combinations of which yeilds the antiderivatives
     '''
-    #Eqs (3 P1)
+    #Eqs (3 P2)
     r_m = 1-np.sqrt(1-a**2)
     r_p = 1+np.sqrt(1-a**2)
     
@@ -323,21 +323,21 @@ def radial_case3_antiderivative(r,r1,r2,r3,r4,a):
     rp1 = (r_p-r1)
     rm1 = (r_m-r1)
     
-    #Eqns (B57 P2)
+    #Eqns (B57 P3)
     A = np.sqrt(r32*r42)
     B = np.sqrt(r31*r41)
 
-    #Eqns (B58-59 P2)
+    #Eqns (B58-59 P3)
     k = ((A+B)**2-r21**2)/(4*A*B)
     alpha0 = (B+A)/(B-A)
     x3 = (A*(r-r1)-B*(r-r2))/(A*(r-r1)+B*(r-r2))
     arg = np.arccos(x3)
 
-    #Eqns (B66 P2)
+    #Eqns (B66 P3)
     alphap = (B*rp2+A*rp1)/(B*rp2-A*rp1)
     alpham = (B*rm2+A*rm1)/(B*rm2-A*rm1)
 
-    #Eqns (B61-62, B65 P2)
+    #Eqns (B61-62, B65 P3)
     def R1(alpha):
         p1 = np.sqrt((alpha**2-1)/(k+(1-k)*alpha**2))
         f1 = p1/2*np.log(np.abs(
@@ -349,21 +349,21 @@ def radial_case3_antiderivative(r,r1,r2,r3,r4,a):
     F = ellipf(arg.real,k.real)
     E = ellipeinc(arg.real,k.real)
     
-    #Eqns (B63-64 P2)
+    #Eqns (B63-64 P3)
     def R2(alpha):
         R2 = 1/(alpha**2-1)*(F-alpha**2/(k+(1-k)*alpha**2)*(E-alpha*np.sin(arg)* \
                 np.sqrt(1-k*np.sin(arg)**2)/(1+alpha*np.cos(arg)))) + \
                 1/(k+(1-k)*alpha**2)*(2*k-alpha**2/(alpha**2-1))*R1(alpha)
         return(R2)
 
-    #Eqns (B71 P2)
+    #Eqns (B71 P3)
     F3 = 1/np.sqrt(A*B)*F
 
-    #Eqns (B72 P2)
+    #Eqns (B72 P3)
     PI31 = ((2*r21*np.sqrt(A*B)/(B**2-A**2))*R1(alpha0)).real
     PI32 = ((2*r21*np.sqrt(A*B)/(B**2-A**2))**2*R2(alpha0)).real
 
-    #Eqns (B67-70 P2)
+    #Eqns (B67-70 P3)
     I0 = F3
     I1 = ((B*r2+A*r1)/(B+A))*F3 + PI31
     I2 = ((B*r2+A*r1)/(B+A))**2*F3 + 2*((B*r2+A*r1)/(B+A))*PI31 + np.sqrt(A*B)*PI32
@@ -446,7 +446,7 @@ def radial_integrals(rs,ro,r1,r2,r3,r4,a,beta, mask2, mask3, lam,eta,redshift_si
     r_m = 1-np.sqrt(1-a**2)
     r_p = 1+np.sqrt(1-a**2)
     
-    #Eqns (B1-3 P2)
+    #Eqns (B1-3 P3)
     I_r = I0
     I_phi = 2*a/(r_p-r_m)*((r_p-a*lam/2)*Ip-(r_m-a*lam/2)*Im)
     I_t = (2)**2/(r_p-r_m)*(r_p*(r_p-a*lam/2)*Ip-r_m*(r_m-a*lam/2)*Im) + (2)**2*I0 + (2)*I1 + I2
@@ -461,7 +461,7 @@ def delta_phi(I_phi,G_phi,lam):
 
     :return: net change in angle (geometric effect + frame dragging)
     """
-    #Eqns (11 P2)
+    #Eqns (11 P3)
     return (-(I_phi+lam*G_phi)-np.pi/2)
 
 #net change of time due to gravitational lensing
@@ -474,7 +474,7 @@ def delta_t(I_t,G_t,a):
 
     :return: total time ellapsed
     """
-    #Eqns (12 P2)
+    #Eqns (12 P3)
     return (-(I_t+a**2*G_t))
 
 #calculate the source radius, angular, and time change for the rays associated with each grid. 

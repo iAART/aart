@@ -2,15 +2,15 @@
 
 AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude at long interferometric baselines. It implements an adaptive non-uniform grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features, predicted by general relativity but not yet observed). 
 
-The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code Pi means Ref. [i+1]. 
+The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code the equations are mentioned as Pi Eq. N, which means Eq. N in Ref. [i]. 
 
 Feel free to use this code (with attribution to Ref. [1]) for your own research or to produce visualizations for your next presentation! 
 
-Last updated: 06.28.2022
+Last updated: 06.29.2022
 
 ## Components ##
 
-* **Lensing Bands**: The main functions are located in <em>lb_f.py</em> : This module computes the Bardeen's coordinates inside the so-called lensing bands (0<=n<=2) on a Cartesian grid with different resolutions. 
+* **Lensing Bands**: The main functions are located in <em>lb_f.py</em> : This module computes the Bardeen's coordinates inside the so-called lensing bands (currently it only computes 0<=n<=2, and the extension to a higher n is possible: just compy the structure of the code and add the desired n number) on a Cartesian grid with different resolutions. 
 
 * **Analytical Ray-Tracing**: The main functions are located in  <em>raytracing_f</em>: For a given location in the Bardeen's plane ($\alpha,\beta$), it computes where it lands in the equatorial plane ($t,r,theta=pi/2,phi$) in Boyer-Lindquist coordinates. The implementatio does it per lensing band. 
 
@@ -47,6 +47,10 @@ On Mac OS, one can install make through, e.g., homebrew (<em>brew install make</
 ## How to run ##
 
 The paramaters are always set in the file <em>params.py</em>. Once that file is modified.
+
+We present some examples in the notebook: 
+
+<em>Examples.ipynb</em>
 
 #### Lensing Bands: 
 

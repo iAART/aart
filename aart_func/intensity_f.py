@@ -10,7 +10,7 @@ def gDisk(r,a,lamb):
 
     :return: the redshift factor associated with the ray
     """
-    #Eqns (P3 B7)
+    #Eqns (P4 B7)
     return sqrt(r**3 - 3*r**2 + 2*a*r**(3/2))/(r**(3/2) - (lamb- a))
 
 def Rint(r,a,lamb,eta):
@@ -23,7 +23,7 @@ def Rint(r,a,lamb,eta):
 
     :return: radial potential evaluated at the source
     """
-    #Eqns (P1 5)
+    #Eqns (P2 5)
     return (r**2 + a**2 - a*lamb)**2 - (r**2 - 2*r + a**2)*(eta + (lamb - a)**2)
 
 def gGas(r,b,a,lamb,eta):
@@ -40,7 +40,7 @@ def gGas(r,b,a,lamb,eta):
     #calculate radius of the inner-most stable circular orbit
     isco=rms(a)
 
-    #Eqns (P1 2)
+    #Eqns (P2 2)
     Delta=r**2 - 2*r + a**2
 
     #Eqns (P3 B13)
