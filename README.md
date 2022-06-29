@@ -10,9 +10,9 @@ Last updated: 06.29.2022
 
 ## Components ##
 
-* **Lensing Bands**: The main functions are located in <em>lb_f.py</em> : This module computes the Bardeen's coordinates inside the so-called lensing bands (currently it only computes 0<=n<=2, and the extension to a higher n is possible: just compy the structure of the code and add the desired n number) on a Cartesian grid with different resolutions. 
+* **Lensing Bands**: The main functions are located in <em>lb_f.py</em> : This module computes the Bardeen's coordinates inside the so-called lensing bands (currently it only computes ($0\le n\le 2$), and the extension to a higher n is possible: just compy the structure of the code and add the desired n number) on a Cartesian grid with different resolutions. 
 
-* **Analytical Ray-Tracing**: The main functions are located in  <em>raytracing_f</em>: For a given location in the Bardeen's plane ($\alpha,\beta$), it computes where it lands in the equatorial plane ($t,r,theta=pi/2,phi$) in Boyer-Lindquist coordinates. The implementatio does it per lensing band. 
+* **Analytical Ray-Tracing**: The main functions are located in  <em>raytracing_f</em>: For a given location in the Bardeen's plane ($\alpha,\beta$), it computes where it lands in the equatorial plane ($t,r,theta=\pi/2,\phi$) in Boyer-Lindquist coordinates. The implementatio does it per lensing band. 
 
 * **Images**: The source functions are located in <em>image.py</em>: It computes an image for a given analytical illumination profile specified in <em>rprofs_f.py</em>, if it is purely radial and analytical, or as an external file. The current version of the code supports inoisy (2011.07151) outputs, where the external file is an HDF5 with an specific structure. In this repo you can find a low-resolution example. 
 
@@ -120,7 +120,7 @@ With the images created using radial intensity prifiles, one may then calculate 
 
   <code> >> python visamp.py </code>
 
-This function creates a set of h5 files, one for each basline angle. These files contains the visibility amplitude as well as the frequency (baseline length in G\lambda). The resulting datasets inside the resulting file are:
+This function creates a set of h5 files, one for each basline angle. These files contains the visibility amplitude as well as the frequency (baseline length in G$\lambda$). The resulting datasets inside the resulting file are:
 
 * freqs: The frequencies where ther vibility amplitude was computed. 
 * visamp: The respective visbility amplitdutes. 
@@ -145,7 +145,7 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## Possible issues ##
 
-* The Radon cut does not smoothly goes to zero. This is sometimes clear from the visamp, where you can see an extra periodicity (wiggle) on each local maxima. To solve this issue, increase the FOV of the n=0 image by providing a larger value for the variable <em>limits</em> in <em>params.py</em>. You can also modify the percentage of points used in <em>npointsfit</em> in <em>visamp_f.py</em>.
+* The Radon cut does not smoothly goes to zero. This is sometimes clear from the visamp, where you can see an extra periodicity (wiggle) on each local maxima. To solve this issue, increase the FOV of the $n=0$ image by providing a larger value for the variable <em>limits</em> in <em>params.py</em>. You can also modify the percentage of points used in <em>npointsfit</em> in <em>visamp_f.py</em>.
 
 * Producing the lensing bands take too long. Sometimes, in particular for larger inclination values, computing the contours of the lensing bands and the points within it, takes a long time. The calculation can be made faster, but less accurate if you decrease the number of points used to compute the contours, i.e., by decreasing the value of the variable <em>npointsS</em> in <em>params.py</em>. It is faster to compute the convex Hull instead of the concave Hull (alpha shape), but then you will have to check that your are not missing points (having extra points is not an issue with the analytical formulae, as the results are masked out). If using the convex is okay, then you can also change the function <em>in_hull</em> in <em>lb_f.py</em> to use <em>hull.find_simplex</em> instead of <em>contains_points</em>. 
 
