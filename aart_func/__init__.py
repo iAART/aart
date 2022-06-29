@@ -15,6 +15,7 @@ import sys
 import warnings
 import h5py
 import os
+import imageio
 
 #For the analytical calculations
 from numpy.lib.scimath import sqrt,  log
@@ -51,6 +52,7 @@ cmap = plt.get_cmap('plasma') # This is the official colors of the BHs!
 #Warnings flags
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 warnings.simplefilter("ignore", UserWarning)
+np.seterr(divide='ignore', invalid='ignore')
 
 #Various auxiliary functions
 from aart_func.misc import *

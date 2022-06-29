@@ -84,16 +84,23 @@ The result will be stored in a HDF5 file that contains source radius, angle, tim
 
 #### Images: 
 
-Once the lensing bands and ray-tracing have been computed. Following the same parameters in aart_params.py, an image can be produced using a defined analytical profile by simply running
+##### Stationary and axisymetric source profiles: 
+
+Once the lensing bands and the rays have been computed, an image can be produced using a defined analytical profile by simply running
 
   <code> >> python radialintensity.py </code>
 
-One may add custom profiles in aart/aart_func/intensity_f.py, and modify radialintensity.py accordingly. The datasets inside the resulting file are:
+The datasets inside the resulting file are:
 
-* bghtsn: The intensity at each point in the image. It follows the order of the lensing band. 
+* bghtsn: The intensity at each point in the image.
 
+You can add a custom radial profile in <em>rprofs\_f.py </em>, and modify <em>intensity\_f.py</em> accordingly.
 
-If an equatorial profile is used
+##### Non-stationary and non-axisymetric source profiles: 
+
+As the dataset produced after ray tracing contains all the information of the BL coordinates, one can also use an analytical non-stationary and non-axisymetric source profiles in <em>rprofs\_f.py </em>, and modify <em>intensity\_f.py</em>, <em>iImages.py</em> and <em>iMovies.py</em> accordingly, to produce images (that use the entire history of the profile) and movies. 
+
+One can also use a precomputed equatorial profile. AART currently implements profiles computed with inoisy. The example includes a test case (<em>inoisy.h5</em>), for which one can simply run by 
 
   <code> >> python iImages.py </code>
   
@@ -101,9 +108,11 @@ If an equatorial profile is used
   
   <code> >> python iMovies.py </code>
   
-  should be used for producing images or a set of images, respectively. Images can be produced by using a single equatorial profile, i.e., in the mode "stationary," or using a the entire history of the equatorial strucutre, i.e, in the mode "dynamical." When movies are made, the dynamical version is always used. In both cases, the resulting datasets inside the resulting file are:
+to produce images or a set of images, respectively. Images can be produced by using a single equatorial profile, i.e., in the mode "stationary," or using the entire history of the equatorial structure, i.e, in the mode "dynamical." When movies are made, the dynamical version is assumed. In both cases, the resulting datasets inside the resulting file are:
 
-* bghtsn: The intensity at each point in the image. It follows the order of the lensing band. 
+* bghtsn: The intensity at each point in the image. When several snapshots are produced, these datasets will have three dimensions, where the first one denotes the time. 
+
+
 
 #### Visibility Amplitudes:
 
@@ -148,7 +157,7 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## References ##
 
-[1] Cardenas-Avendano, A., Zhu, Hengrui & Lupsasca, A. A semi-analytical adaptive ray tracing code to study black hole photon rings
+[1] Cardenas-Avendano, A., Zhu, Hengrui & Lupsasca, A. Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
 
 [2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101(4), 044031.(arXiv:1910.12873)
 
@@ -156,9 +165,7 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 [5] The code can be found here: <https://people.math.sc.edu/Burkardt/cpp_src/elliptic_integral/elliptic_integral.html>
 
-## License
-
-MIT license
+## MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this 
 software and associated documentation files (the "Software"), to deal in the Software 

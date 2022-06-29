@@ -42,20 +42,20 @@ radonangles=[0,90]
 fudge=1.5 #Fudge factor (For n>0)
 
 # Sample Equatorial Profile
-i_fname="The path to your file here"
+i_fname="inoisy.h5"
 
 # Stationary assumes a single inoisy frame. "stationary" or "dynamical" 
 disk="dynamical" 
 
-# inoisy frame for single images
-i_frame=0 
+# inoisy initial time frame for single images
+i_frame=0
 
 # Initial and final times in units of M
 i_tM=0  
 #Makes sense when is less than the inosy temporal length 
-f_tM=64	
+f_tM=12
 #Number of snapshots in that range    
-snapshots=64
+snapshots=12
 
 # SU's parameters for the envelope 
 # Just used for the profiles computed within AART

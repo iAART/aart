@@ -94,47 +94,28 @@ timeconversion=i_dt*MM87kg*Gc/cc**3/(3600*24) # [days]
 
 maxintensity=np.nanmax(data)
 
-if iplots==1:
-
-	if disk=="stationary":
-
-		print("Saving the inoisy used snapshot ",i_frame)
-		filename=path+"Single_inoisy_a_%s_i_%s.h5"%(spin_case,i_case)
-		h5f = h5py.File(filename, 'w')
-		h5f.create_dataset('inoisy', data=data[i_frame,:,:])
-		h5f.close()
-		print("Single inoisy file <",filename,"> created.")
-
 if disk=="dynamical":
 
 	print("Using all the available inoisy frames")
 
 	interpolated3_R=RegularGridInterpolator((times,x1,x2), np.transpose(data,(0,2,1)),fill_value=0,bounds_error=False,method='linear')
 
-	I0s = []
-	I1s = []
-	I2s = []
-
 	print("Computing lensed image using all inoisy frames")
 
-	i_bghts0 = obsint.slow_light(supergrid0,mask0,sign0,spin_case,isco,rs0,phi0,np.mod(t0+i_tM+i_frame,xtend), interpolated3_R,thetao)
-	i_bghts1 = obsint.slow_light(supergrid1,mask1,sign1,spin_case,isco,rs1,phi1,np.mod(t1+i_tM+i_frame,xtend), interpolated3_R,thetao)
-	i_bghts2 = obsint.slow_light(supergrid2,mask2,sign2,spin_case,isco,rs2,phi2,np.mod(t2+i_tM+i_frame,xtend), interpolated3_R,thetao)
+	i_bghts0 = obsint.slow_light(supergrid0,mask0,sign0,spin_case,isco,rs0,phi0,np.mod(t0+i_tM+i_frame,xtend), interpolated3_R,thetao);
+	i_bghts1 = obsint.slow_light(supergrid1,mask1,sign1,spin_case,isco,rs1,phi1,np.mod(t1+i_tM+i_frame,xtend), interpolated3_R,thetao);
+	i_bghts2 = obsint.slow_light(supergrid2,mask2,sign2,spin_case,isco,rs2,phi2,np.mod(t2+i_tM+i_frame,xtend), interpolated3_R,thetao);
 
 	i_I0 = (i_bghts0).reshape(N0,N0).T
 	i_I1 = (i_bghts1).reshape(N1,N1).T
 	i_I2 = (i_bghts2).reshape(N2,N2).T
 
-	I0s.append(i_I0)
-	I1s.append(i_I1)
-	I2s.append(i_I2)
-
 	filename=path+"Dynamical_Image_a_%s_i_%s.h5"%(spin_case,i_case)
 
 	h5f = h5py.File(filename, 'w')
-	h5f.create_dataset('bghts0', data=np.array(I0s))
-	h5f.create_dataset('bghts1', data=np.array(I1s))
-	h5f.create_dataset('bghts2', data=np.array(I2s))
+	h5f.create_dataset('bghts0', data=i_I0)
+	h5f.create_dataset('bghts1', data=i_I1)
+	h5f.create_dataset('bghts2', data=i_I2)
 
 	h5f.close()
 

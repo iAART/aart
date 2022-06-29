@@ -106,7 +106,7 @@ def mp_worker(tsnap):
 	i_I1 = (i_bghts1).reshape(N1,N1).T
 	i_I2 = (i_bghts2).reshape(N2,N2).T
 
-	print("Calculating an image at time t=%s"%np.round(tsnap,5))
+	print("Calculating an image at time t=%s (M)"%np.round(tsnap,5))
 	return(i_I0,i_I1,i_I2)
 
 p = get_context("fork").Pool(nthreads) #using n threads
