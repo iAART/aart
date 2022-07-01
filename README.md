@@ -169,7 +169,7 @@ The linear polarization of a given configuration of the magnetic field can be co
   * EVPA_x: The x-component of the the electric-vector position angle.
   * EVPA_y: The y-component of the the electric-vector position angle.
 
-## Possible issues ##
+## Limitations and known possible performance bottlenecks ##
 
 * The Radon cut does not smoothly goes to zero. This is sometimes clear from the visamp, where you can see an extra periodicity (wiggle) on each local maxima. To solve this issue, increase the FOV of the $n=0$ image by providing a larger value for the variable <em>limits</em> in <em>params.py</em>. You can also modify the percentage of points used in <em>npointsfit</em> in <em>visamp_f.py</em>.
 
