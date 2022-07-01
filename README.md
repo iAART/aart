@@ -8,7 +8,7 @@ The use of AART in scientific publications must be properly acknowledged. Please
 
 	Cardenas-Avendano, A., Zhu, H. & Lupsasca, A. 
 	Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
-	[arXiv:XXX]
+	[arXiv:Please come back soon for the reference!]
 
 We also request that AART modifications or extensions leading to a scientific publication be made public as free software. 
 
@@ -31,8 +31,8 @@ Last updated: 06.29.2022
 
 ## Dependencies ##
 
-#### Python Package's needed: 
-All the dependencies are located in the <em>init.py</em> file. Most of the package's will come natively with anaconda (e.g., numpy, scipy, matplotlib, multiprocessing, skimage) but some may not. 
+#### Python Libraries: 
+All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy, matplotlib, multiprocessing, skimage) but some may not. 
 
 To install any missing packages, run
   
