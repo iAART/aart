@@ -1,8 +1,8 @@
 # Adaptive Analytical Ray Tracing (AART) #
 
-AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude at long interferometric baselines. It implements an adaptive non-uniform grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features, predicted by general relativity but not yet observed). 
+AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude on long interferometric baselines. It implements a non-uniform adaptive grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features, predicted by general relativity but not yet observed). 
 
-The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code the equations are mentioned as Pi Eq. N, which means Eq. N in Ref. [i]. 
+The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code, the equations are mentioned as Pi Eq. N, which means Eq. N in Ref. [i]. 
 
 The use of AART in scientific publications must be properly acknowledged. Please cite:
 
@@ -14,15 +14,15 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 06.29.2022
+Last updated: 07.03.2022
 
-## Components ##
+## AART's Components ##
 
 * **Lensing Bands**: The main functions are located in <em>lb_f.py</em> : This module computes the Bardeen's coordinates inside the so-called lensing bands (currently it only computes ($0\le n\le 2$), and the extension to a higher n is possible: just compy the structure of the code and add the desired n number) on a Cartesian grid with different resolutions. 
 
 * **Analytical Ray-Tracing**: The main functions are located in  <em>raytracing_f</em>: For a given location in the Bardeen's plane ($\alpha,\beta$), it computes where it lands in the equatorial plane ($t,r,\theta=\pi/2,\phi$) in Boyer-Lindquist coordinates. The implementatio does it per lensing band. 
 
-* **Images**: The source functions are located in <em>image.py</em>: It computes an image for a given analytical illumination profile specified in <em>rprofs_f.py</em>, if it is purely radial and analytical, or as an external file. The current version of the code supports inoisy (<https://arxiv.org/abs/2011.07151>) outputs, where the external file is an HDF5 with an specific structure. In this repo you can find a low-resolution example. 
+* **Images**: The source functions are located in <em>image.py</em>: It computes an image for a given analytical illumination profile specified in <em>rprofs_f.py</em>, if it is purely radial and analytical, or as an external file. The current version of the code supports <em>inoisy</em> (<https://arxiv.org/abs/2011.07151>) outputs, where the external file is an HDF5 with an specific structure. In this repo you can find a low-resolution example. 
 
 * **Visibility Amplitudes**: The main functions are located in <em>visamp_f.py</em>: It computes the visibility amplitudes for given intensities over $n$ lensing bands. 
 
@@ -31,7 +31,18 @@ Last updated: 06.29.2022
 
 ## Dependencies ##
 
+#### A C++ shared library for the elliptic integral of the third kind:  
+
+As there is no (yet!) efficient implementation for the elliptic integral of the third kind in python, we need to compile some C++ code, authored by John Burkardt [4], into a shared library. On Ubuntu, navigate to the <em>aart_func<em> directory and compile the code by typing:
+
+  <code> >> cd aart_func </code>
+  
+  <code> >> make </code>
+  
+On Mac OS, you can install make through, e.g., homebrew (<em>brew install make</em>). 
+
 #### Python Libraries: 
+
 All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy, matplotlib, multiprocessing, skimage) but some may not. 
 
 To install any missing packages, run
@@ -42,17 +53,8 @@ To install any missing packages, run
   
   <code> conda install -c anaconda h5py</code>
 
-#### For the elliptic integrals:  
 
-Also, there is no efficient implementation for the elliptic integral for the third kind in python. So we need to compile some C++ code, authored by John Burkardt [4], into a shared library. On Ubuntu, navigate to the aart_func directory and compile the code, by running the following:
-
-  <code> >> cd aart_func </code>
-  
-  <code> >> make </code>
-  
-On Mac OS, one can install make through, e.g., homebrew (<em>brew install make</em>). 
-
-## How to run ##
+## How to run AART ##
 
 The paramaters are always set in the file <em>params.py</em>. Once that file is modified.
 
@@ -171,9 +173,13 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## Limitations and known possible performance bottlenecks ##
 
+* This code has only been tested on Mac OS (M1 and Intel) and on Ubuntu. 
+
+* If you want to run a retrograde disk, you will have to apply symmetry arguments. In other words, run the positive spin case ($-a$), flip the resulting lensing bands and rays, and then compute the intensity on each pixel. Note that the characteristic radii need also to be modified. We plan to add this feature in a future version. 
+
 * The Radon cut does not smoothly goes to zero. This is sometimes clear from the visamp, where you can see an extra periodicity (wiggle) on each local maxima. To solve this issue, increase the FOV of the $n=0$ image by providing a larger value for the variable <em>limits</em> in <em>params.py</em>. You can also modify the percentage of points used in <em>npointsfit</em> in <em>visamp_f.py</em>.
 
-* Producing the lensing bands take too long. Sometimes, in particular for larger inclination values, computing the contours of the lensing bands and the points within it, takes a long time. The calculation can be made faster, but less accurate if you decrease the number of points used to compute the contours, i.e., by decreasing the value of the variable <em>npointsS</em> in <em>params.py</em>. It is faster to compute the convex Hull instead of the concave Hull (alpha shape), but then you will have to check that your are not missing points (having extra points is not an issue with the analytical formulae, as the results are masked out). If using the convex is okay, then you can also change the function <em>in_hull</em> in <em>lb_f.py</em> to use <em>hull.find_simplex</em> instead of <em>contains_points</em>. 
+* Producing the lensing bands is taking too long. Sometimes, in particular for larger inclination values, computing the contours of the lensing bands and the points within it, takes a long time. The calculation can be made faster, but less accurate if you decrease the number of points used to compute the contours, i.e., by decreasing the value of the variable <em>npointsS</em> in <em>params.py</em>. It is faster to compute the convex Hull instead of the concave Hull (alpha shape), but then you will have to check that your are not missing points (having extra points is not an issue with the analytical formulae, as the results are masked out). If using the convex is okay, then you can also change the function <em>in_hull</em> in <em>lb_f.py</em> to use <em>hull.find_simplex</em> instead of <em>contains_points</em>. 
 
 ## Authors ##
 
