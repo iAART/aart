@@ -187,8 +187,6 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 [4] Gralla, S. E., Lupsasca, A., & Marrone, D. P. (2020). The shape of the black hole photon ring: A precise test of strong-field general relativity. Physical Review D, 102(12), 124004.
 
-[5] The code can be found here: <https://people.math.sc.edu/Burkardt/cpp_src/elliptic_integral/elliptic_integral.html>
-
 ## MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this 
