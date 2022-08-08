@@ -10,11 +10,12 @@ i_case=17
 #Disk's inclination       
 i_disk=90    
 
+
 # Distance to M87 in meters
 dM87=5.214795112e23  
 # Mass of M87 1 /psi= 6.2e9 Kg
 psi=1.07473555940836 
-#Observer's distance [M]
+#Observer's distance
 D_obs=10000 
 
 # If equal to 1, the radon cuts profiles will be stored   

@@ -31,19 +31,9 @@ Last updated: 07.03.2022
 
 ## Dependencies ##
 
-#### A C++ shared library for the elliptic integral of the third kind:  
-
-As there is no (yet!) efficient implementation for the elliptic integral of the third kind in python, we need to compile some C++ code, authored by John Burkardt [4], into a shared library. On Ubuntu, navigate to the <em>aart_func<em> directory and compile the code by typing:
-
-  <code> >> cd aart_func </code>
-  
-  <code> >> make </code>
-  
-On Mac OS, you can install make through, e.g., homebrew (<em>brew install make</em>). 
-
 #### Python Libraries: 
 
-All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy, matplotlib, multiprocessing, skimage) but some may not. 
+All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy >=1.8, matplotlib, multiprocessing, skimage) but some may not. 
 
 To install any missing packages, run
   

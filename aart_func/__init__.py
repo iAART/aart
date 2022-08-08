@@ -15,7 +15,7 @@ import sys
 import warnings
 import h5py
 import os
-import imageio
+import imageio.v2 as imageio
 
 #For the analytical calculations
 from numpy.lib.scimath import sqrt,  log
@@ -23,11 +23,12 @@ from numpy import arccos, arcsin,sin, cos
 from scipy.special import ellipk, ellipeinc, ellipe
 from scipy.special import ellipkinc as ellipf
 from scipy.special import ellipj
+from scipy.special import elliprj
 from scipy.integrate import cumtrapz,quad
 
 #Required for the wrapper for elliptic integral of the third kind
-import ctypes
-import numpy.ctypeslib as ctl
+#import ctypes
+#import numpy.ctypeslib as ctl
 
 #For the lensing bands
 from scipy.spatial import Delaunay

@@ -59,14 +59,14 @@ nt = data.shape[0] #inoisy time resolution
 ni = data.shape[1] #inoisy x resolution
 nj = data.shape[2] #inoisy y resolution
 
-xtstart = np.array(hf['params/x0start'])
-xtend = np.array(hf['params/x0end'])
+xtstart = np.array(hf['params/x0start'])[0]
+xtend = np.array(hf['params/x0end'])[0]
 
-x1start = np.array(hf['params/x1start'])
-x2start = np.array(hf['params/x2start'])
+x1start = np.array(hf['params/x1start'])[0]
+x2start = np.array(hf['params/x2start'])[0]
 
-x1end = np.array(hf['params/x1end'])
-x2end = np.array(hf['params/x2end'])
+x1end = np.array(hf['params/x1end'])[0]
+x2end = np.array(hf['params/x2end'])[0]
 
 x1 = np.linspace(x1start, x1end, ni) 
 x2 = np.linspace(x2start, x2end, nj)

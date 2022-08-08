@@ -47,7 +47,7 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
         norm=visamp[0]
         visamp/=norm
 
-        print("V(0)= ",norm)
+        #print("V(0)= ",norm)
         
         filename=path+"Visamp_%s_a_%s_i_%s_%s.h5"%(radonangle,spin_case,i_case,Ncut)
         

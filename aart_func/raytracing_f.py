@@ -9,7 +9,6 @@ def conserved_quantities(alpha,beta,theta_o,a):
     :param beta: y coordinate (parallel to the projected spin axis)
     :param tehta_o: inclination angle of the observer from the black hole spin axis
     :param a: spin of the black hole (in unit M=1)
-
     :returns: angular momentum and carter constant
     """
     # Eqs. (58-59 P2)
@@ -21,7 +20,6 @@ def cuberoot(a):
     '''
     Computes cube root for an array of real number or the principle root for complex number
     :param a: array of numbers
-
     :returns: cuberoot of a
     '''
     a_real_ind = np.ones(a.shape)
@@ -39,7 +37,6 @@ def radial_turning_points(alpha,beta,lam,eta,a):
     :param lam: angular momentum
     :param eta: carter constant
     :param a: spin of black hole
-
     :returns: the four roots for the radial turning points r1,r2,r3,r4. 
     '''
     # Eqs. (A1-A5 P2)
@@ -75,7 +72,6 @@ def angular_turning_points(alpha,beta,lam,eta,a):
     :param lam: angular momentum
     :param eta: carter constant
     :param a: spin of black hole
-
     :returns: u_p, u_m for evaluating the angular integrals;
               and theta_p, theta_m the angular turning points 
     '''
@@ -101,7 +97,6 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     :param pm_o: the sign of p_theta (theta momentum) at the observer 
     :param tehta_o: inclination angle of the observer from the black hole spin axis
     :param a: spin of black hole
-
     :returns: G_theta, G_phi, G_t angular path integrals
     '''
     
@@ -132,14 +127,14 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     
     return(G_theta,G_phi,G_t)
 
-def source_radius2(r1,r2,r3,r4,G_theta,alpha):
+def source_radius2_inf(r1,r2,r3,r4,G_theta,alpha):
     '''
     Computes radius for the equitorial source of a photon with Type II trajectory
     (outside the critical curve, one turning point, scattering) in Boyer-Lindquist coordinates
+    assuming that the observer is at infinity
     :param r1-4: radial turning points
     :param G_theta: the angular path integral, G_theta=I_r=Mino time
     :param alpha: x coordinate on the image plane
-
     :returns:  radius of the equitorial source
     '''
     # Eqs. (31-32 P2)
@@ -157,14 +152,41 @@ def source_radius2(r1,r2,r3,r4,G_theta,alpha):
     rs2 = np.nan_to_num((r4*r31-r3*r41*sn_square)/(r31-r41*sn_square))
     return(rs2)
 
-def source_radius3(r1,r2,r3,r4,G_theta,alpha):
+def source_radius2(r,r1,r2,r3,r4,G_theta):
+    '''
+    Computes radius for the equitorial source of a photon with Type II trajectory
+    (outside the critical curve, one turning point, scattering) in Boyer-Lindquist coordinates
+    :param r: Observer's radius
+    :param r1-4: radial turning points
+    :param G_theta: the angular path integral, G_theta=I_r=Mino time
+
+    :returns:  radius of the equitorial source
+    '''
+    # Eqs. (31-32 P1)
+    r31 = (r3-r1)
+    r32 = (r3-r2)
+    r41 = (r4-r1)
+    r42 = (r4-r2)
+    r21 = (r2-r1)
+
+    k2 = r32*r41/r31/r42
+
+    x2 = np.sqrt((r-r4)*r31/(r-r3)/r41).real
+    arg = np.arcsin(x2)
+
+    F2 = ellipf(arg.real,k2.real)
+    sn_square = np.square(ellipj(1/2*np.sqrt(r31*r42).real*G_theta-F2, (k2).real)[0])
+    rs2 = np.nan_to_num((r4*r31-r3*r41*sn_square)/(r31-r41*sn_square))
+    return(rs2)
+
+def source_radius3_inf(r1,r2,r3,r4,G_theta,alpha):
     '''
     Computes radius for the equitorial source of a photon with Type III trajectory
     (inside the critical curve, generated at the horizon, no turning points) in Boyer-Lindquist coordinates
+    assuming that the observer is at infinity
     :param r1-4: radial turning points
     :param G_theta: the angular path integral, G_theta=I_r=Mino time
     :param alpha: x coordinate on the image plane
-
     :returns:  radius of the equitorial source
     '''
 
@@ -188,6 +210,36 @@ def source_radius3(r1,r2,r3,r4,G_theta,alpha):
     rs3 = np.nan_to_num(((B*r2-A*r1)+(B*r2+A*r1)*cn)/((B-A)+(B+A)*cn))
     return(rs3)
 
+def source_radius3(r,r1,r2,r3,r4,G_theta):
+    '''
+    Computes radius for the equitorial source of a photon with Type III trajectory
+    (inside the critical curve, generated at the horizon, no turning points) in Boyer-Lindquist coordinates
+    :param r: Observer's radius
+    :param r1-4: radial turning points
+    :param G_theta: the angular path integral, G_theta=I_r=Mino time
+
+    :returns:  radius of the equitorial source
+    '''
+    r31 = (r3-r1)
+    r32 = (r3-r2)
+    r41 = (r4-r1)
+    r42 = (r4-r2)
+    r21 = (r2-r1)
+
+    #Eqs (B57 P2)
+    A = np.sqrt(r32*r42).real
+    B = np.sqrt(r31*r41).real
+    #Eq (B59 P2)
+    k3 = ((A+B)**2 - r21**2)/(4*A*B)
+
+    F3 = ellipf(np.arccos((A*(r-r1)-B*(r-r2))/(A*(r-r1)+B*(r-r2))).real,(k3).real)
+
+    # Eqs. (B74-75 P1)
+    cn = ellipj(np.sqrt(A*B)*G_theta-F3,(k3).real)[1]
+
+    rs3 = np.nan_to_num(((A*r1-B*r2)-(A*r1+B*r2)*cn)/((A-B)-(A+B)*cn))
+    return(rs3)
+
 def radial_potential(r,a,lam,eta):
     """
     Evaluates the radial effective potential, roots of which are the turing points. 
@@ -195,7 +247,6 @@ def radial_potential(r,a,lam,eta):
     :params a: spin of the black hole (in units M=1)
     :params lam: angular momentum
     :params eta: Carter constant
-
     :return: value of the radial potential
     """
     #Eqs (2,5 P2)
@@ -211,7 +262,6 @@ def radial_case2_antiderivative(r,r1,r2,r3,r4,a,lam,eta):
     :param a: spin of black hole
     :param lam: angular momentum
     :param eta: carter constant 
-
     :returns I0,I1,I2,Ip,Im: values of the auxiliary integrals, combinations of which yeilds the antiderivatives
     '''
     
@@ -266,7 +316,6 @@ def radial_case2(rs,ro,r1,r2,r3,r4,a,beta,lam,eta,redshift_sign):
     :param lam: angular momentum
     :param eta: carter constant 
     :redshift_sign: sign of the redshift associated with a photon
-
     :returns I0,I1,I2,Ip,Im: values of the definite auxiliary integrals.  
     """
     #Eqs (B25 P3)
@@ -300,7 +349,6 @@ def radial_case3_antiderivative(r,r1,r2,r3,r4,a):
     :param r: radius of the equitorial photon source
     :param r1-r4: radial turning points
     :param a: spin of black hole
-
     :returns I0,I1,I2,Ip,Im: values of the auxiliary integrals, combinations of which yeilds the antiderivatives
     '''
     #Eqs (3 P2)
@@ -379,7 +427,6 @@ def radial_case3(rs,ro,r1,r2,r3,r4,a):
     :param ro: radius of the observer
     :param r1-r4: radial turning points
     :param a: spin of black hole
-
     :returns I0,I1,I2,Ip,Im: values of the definite auxiliary integrals.  
     """
     #source terms
@@ -413,7 +460,6 @@ def radial_integrals(rs,ro,r1,r2,r3,r4,a,beta, mask2, mask3, lam,eta,redshift_si
     :param lam: angular momentum
     :param eta: carter constant 
     :redshift_sign: sign of the redshift associated with a photon
-
     :returns I_r,I_phi,I_t: values of the definite radial integrals.  
     """
 
@@ -458,7 +504,6 @@ def delta_phi(I_phi,G_phi,lam):
     :param I_phi: radial phi path integral
     :param G_phi: angular phi path integral
     :param lam: angular momentum
-
     :return: net change in angle (geometric effect + frame dragging)
     """
     #Eqns (11 P3)
@@ -471,7 +516,6 @@ def delta_t(I_t,G_t,a):
     :param I_t: radial t path integral
     :param G_t: angular t path integral
     :param a: black hole spin
-
     :return: total time ellapsed
     """
     #Eqns (12 P3)
@@ -487,7 +531,6 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     :param a: black hole spin
     :param mbar: lensing band index 0,1,2,...
     :param distance: distance of the observer in units of black hole mass, set to 1000M by default
-
     :return rs: source radius
     :return redshift_sign: sign of the redshift
     :return deltat: time ellapsed
@@ -524,8 +567,11 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     redshift_sign = np.ones(mask.shape)
     redshift_sign[mask] = r_sign
 
-    rs2 = source_radius2(r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2],eta[mask2])
-    rs3 = source_radius3(r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3],eta[mask3])
+    rs2 = source_radius2(distance,r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2])
+    rs3 = source_radius3(distance,r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3])
+
+    #rs2 = source_radius2_inf(r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2],eta[mask2])
+    #rs3 = source_radius3_inf(r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3],eta[mask3])
 
     rs = np.zeros(mask.shape)
     r_mask = np.zeros(rs[mask].shape)
@@ -599,7 +645,6 @@ def rt(supergrid0,mask0,supergrid1,mask1,supergrid2,mask2):
     
     :return: if save==1: save the results of calculate_observables as .h5 files for each lensing band.
              if live==1: output those results
-
     Note: the spin, observer inclination and distance can be changed in the input file.
     """
 
