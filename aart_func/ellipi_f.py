@@ -1,9 +1,10 @@
 from aart_func import *
 from params import * 
 
-def ellipi(n,phi,m): 
-    csc=1/np.sin(phi)**2
-    return 1/3*n*elliprj(csc-1,csc-m,csc,csc-n)+ellipf(phi,m)
+#Legendre’s Integrals as Symmetric Integrals https://dlmf.nist.gov/19.25#i
+def ellipi(n,phi,m):
+    csc2=1/(np.sin(phi)**2+1e-16)
+    return 1/3*n*elliprj(csc2-1,csc2-m,csc2,csc2-n)+ellipf(phi,m)
 
 def ellippi_lim(n,phi,m):
     #take arrays n, m, phi can either be a float or an array

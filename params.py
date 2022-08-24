@@ -7,9 +7,6 @@ print("Copyright (C) 2022, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 spin_case=0.94
 #Observer's inclination  
 i_case=17
-#Disk's inclination       
-i_disk=90    
-
 
 # Distance to M87 in meters
 dM87=5.214795112e23  
@@ -58,15 +55,16 @@ f_tM=12
 #Number of snapshots in that range    
 snapshots=12
 
-# SU's parameters for the envelope 
-# Just used for the profiles computed within AART
 isco = rms(spin_case)
-
+# SU's parameters for the envelope 
+# Just used for the analytical profiles
 gammap=-3/2
 mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
-speed_p=1
+# Sarting point of the profile's cutoff
 cutoff_p=limits-1
+#Speed/slope of the cutoff
+speed_p=1
 
 #The power of the redshift factor
 gfactor=3
@@ -80,7 +78,11 @@ npointsS=100
 #For the parallel generation of images (movies)
 nthreads=4
 
+#Observer's inclination in radians
 thetao=i_case*np.pi/180
+#Disk's inclination  
+#Current version is just implemented for equatorial models   
+i_disk=90    
 thetad=i_disk*np.pi/180
 
 Gc=6.67e-11 # G constant [m^3 kg^-1 s^-2]
