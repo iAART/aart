@@ -8,12 +8,21 @@ spin_case=0.94
 #Observer's inclination  
 i_case=17
 
-# Distance to M87 in meters
-dM87=5.214795112e23  
-# Mass of M87 1 /psi= 6.2e9 Kg
+# Distance to the BH in meters (default: M87)
+dBH=5.214795112e23  
+# BH mass-to-distance ratio (default: 1/psi= 6.2e9 Kg)
 psi=1.07473555940836 
-#Observer's distance
+#Observer's distance in units of M
 D_obs=10000 
+
+#Velocity Profile for the gas
+
+#Sub-Kepleniarity param
+sub_kep=1.0;
+#Radial velocity param
+betar=1.0;
+#Angular velocity param
+betaphi=1.0;
 
 # If equal to 1, the radon cuts profiles will be stored   
 radonfile=0
@@ -25,7 +34,7 @@ bvapp=0
 #If equal to 1, the sizes of the grids will be equal and an image can be computed
 #by summing the contributions    
 p_image=1
-limits=25
+limits=30
 #Resolution for the n=0 image [M]
 dx0 =0.02
 #Resolution for the n=1 image [M]
@@ -61,16 +70,12 @@ isco = rms(spin_case)
 gammap=-3/2
 mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
-# Sarting point of the profile's cutoff
-cutoff_p=limits-1
-#Speed/slope of the cutoff
-speed_p=1
 
 #The power of the redshift factor
 gfactor=3
 
 # Max baseline in G\lambda
-maxbaseline=550 
+maxbaseline=500 
 
 # Number of points in the critical curve 
 npointsS=100    
@@ -88,15 +93,15 @@ thetad=i_disk*np.pi/180
 Gc=6.67e-11 # G constant [m^3 kg^-1 s^-2]
 cc= 2.99792458e8 # c constant [m/s]
 Msc=1.988435e30 # Solar Mass [Kg]
-MM87kg= 6.2e9*psi*Msc # [Kg]
 
-MM87=MM87kg *Gc/cc**2 # Mass of M87 in meters, i.e., (psi*6.2*10^9) psi ("Best fit") Solar Masses 
+MMkg= 6.2e9*psi*Msc # [Kg]
+MM=MMkg *Gc/cc**2 # Mass of the BH in meters, i.e., for M87(psi*6.2*10^9) psi ("Best fit") Solar Masses 
 
 # Size of the real image in meters
-sizeim_Real=(limits)*MM87 
+sizeim_Real=(limits)*MM 
 #1 microarcsec in radians
 muas_to_rad = np.pi/648000 *1e-6 
-fov_Real=np.arctan(sizeim_Real/(dM87))/muas_to_rad #muas
+fov_Real=np.arctan(sizeim_Real/(dBH))/muas_to_rad #muas
 #print("FOV= ",np.round(2*fov,2),"muas")
 
 #Path where the results will be stored

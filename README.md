@@ -6,15 +6,15 @@ The code, described in detail in Ref. [1], implements all the relevant equations
 
 The use of AART in scientific publications must be properly acknowledged. Please cite:
 
-	Cardenas-Avendano, A., Zhu, H. & Lupsasca, A. 
-	Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
-	[arXiv:Please come back soon for the reference!]
+_______
+Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. "Adaptive Analytical Ray Tracing of Black Hole Photon Rings." [arXiv:2211.07469](https://arxiv.org/abs/2211.07469) 
+_______
 
 We also request that AART modifications or extensions leading to a scientific publication be made public as free software. 
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 07.03.2022
+Last updated: 11.15.2022
 
 ## AART's Components ##
 
@@ -37,11 +37,15 @@ All the dependencies are located in the <em>init.py</em> file. Most of the libra
 
 To install any missing packages, run
   
-  <code> >> pip install "package_name" </code>
+<code> pip install "package_name" </code>
   
-  or, if using anaconda, search for the missing packages and run, e.g. for h5py (Read and write HDF5 files from Python,) 
+or, if using anaconda, search for the missing packages and run, e.g. for h5py (Read and write HDF5 files from Python,) 
   
-  <code> conda install -c anaconda h5py</code>
+<code> conda install -c anaconda h5py</code>
+
+Sometimes scipy does not update automatically to the latest version. If that is the case, you may want to type 
+
+<code> pip install -U scipy</code>
 
 
 ## How to run AART ##
@@ -56,7 +60,7 @@ We present some examples in the notebook:
 
 The lensing bands are computed by simply running
 
-  <code> >> python lensingbands.py </code>
+  <code> python lensingbands.py </code>
   
 The result will be stored in a HDF5 file that contains the values of the Bardeen's coordinates withing each lensing band. The datasets inside the resulting file are:
 
@@ -77,7 +81,7 @@ This image is produced in the example code:
 
 To compute the equitorial radius, angle, and emission time of a photon, we perform a backward ray-tracing from the observer plane. By running the following, we evaluate the source radius, angle, and time within the grid from each lensing bands:
 
-  <code> >> python raytracing.py </code>
+  <code> python raytracing.py </code>
   
 The result will be stored in a HDF5 file that contains source radius, angle, time, as well as the radial component of the four momentum at the equitorial plane, for lensing bands n=0,1,2. The datasets inside the resulting file are:
 
@@ -96,7 +100,7 @@ This image is produced in the example code:
 
 Once the lensing bands and the rays have been computed, an image can be produced using a defined analytical profile by simply running
 
-  <code> >> python radialintensity.py </code>
+  <code> python radialintensity.py </code>
 
 The datasets inside the resulting file are:
 
@@ -114,11 +118,11 @@ As the dataset produced after ray tracing contains all the information of the BL
 
 One can also use a precomputed equatorial profile. AART currently implements profiles computed with inoisy. The example includes a test case (<em>inoisy.h5</em>), for which one can simply run by 
 
-  <code> >> python iImages.py </code>
+  <code> python iImages.py </code>
   
   or 
   
-  <code> >> python iMovies.py </code>
+  <code> python iMovies.py </code>
   
 to produce images or a set of images, respectively. Images can be produced by using a single equatorial profile, i.e., in the mode "stationary," or using the entire history of the equatorial structure, i.e, in the mode "dynamical." When movies are made, the dynamical version is assumed. In both cases, the resulting datasets inside the resulting file are:
 
@@ -132,7 +136,7 @@ This gif is produced in the example code:
 
 With the images created using radial intensity prifiles, one may then calculate the visibility of the image projected onto a baseline. This function first performs radon transforms of the image at a set of specified angles (radonangles in <em>params.py</em>), and then compute the visibility amplitude by 
 
-  <code> >> python visamp.py </code>
+  <code> python visamp.py </code>
 
 This function creates a set of h5 files, one for each basline angle. These files contains the visibility amplitude as well as the frequency (baseline length in G$\lambda$). The resulting datasets inside the resulting file are:
 
@@ -152,7 +156,7 @@ This image is produced in the example code:
 
 The linear polarization of a given configuration of the magnetic field can be computed by
 
-  <code> >> python polarization.py </code>
+  <code> python polarization.py </code>
   
   The resulting datasets inside the resulting file are:
 
@@ -179,11 +183,11 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## References ##
 
-[1] Cardenas-Avendano, A., Zhu, H. & Lupsasca, A. Adaptive Analytical Ray-Tracing of Black Hole Photon Rings. 
+[1] Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. Adaptive Analytical Ray Tracing of Black Hole Photon Rings. [arXiv:2211.07469](https://arxiv.org/abs/2211.07469)
 
-[2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101(4), 044031.(arXiv:1910.12873)
+[2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101(4), 044031.
 
-[3] Gralla, S. E., & Lupsasca, A. (2020). Null geodesics of the Kerr exterior. Physical Review D, 101(4), 044032.(arXiv:1910.12881)
+[3] Gralla, S. E., & Lupsasca, A. (2020). Null geodesics of the Kerr exterior. Physical Review D, 101(4), 044032.
 
 [4] Gralla, S. E., Lupsasca, A., & Marrone, D. P. (2020). The shape of the black hole photon ring: A precise test of strong-field general relativity. Physical Review D, 102(12), 124004.
 

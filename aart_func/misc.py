@@ -13,6 +13,7 @@ def cbrt(x):
 def rms(a):
     '''
     ISCO value
+    (Eq. B16 P1)
     :param a: BH spin
     '''
     Z1=1 + (1 - a**2)**(1/3) *((1 + a)**(1/3) + (1 - a)**(1/3))

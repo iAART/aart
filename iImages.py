@@ -90,7 +90,7 @@ t2+=fact2
 print("AART starts!")
 
 i_dt = xtend/nt
-timeconversion=i_dt*MM87kg*Gc/cc**3/(3600*24) # [days]
+timeconversion=i_dt*MMkg*Gc/cc**3/(3600*24) # [days]
 
 maxintensity=np.nanmax(data)
 

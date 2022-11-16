@@ -2,6 +2,7 @@ from aart_func import *
 from params import * 
 
 def imagetreat(image,radonangle,limsn,lims0):
+    # Computes the radon cut of an image and scales it
     NN = image.shape[0]
     fov=fov_Real*(limsn/lims0)
     fov_rad=fov*1e-6*1./3600.*np.pi/180.
@@ -29,7 +30,7 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
         R=R0(xvalues)+R1(xvalues)+R2(xvalues)
 
         # Compute 1D FFT of the projection, shift and take modulus
-        padding=32
+        padding=16
         radonff = fft(R,padding*xvalues.shape[0]) #1D FFT of the projection
         radonshift=fftshift(radonff) # recenter FFT
         radonvisamp=np.abs(radonshift) # this is the visamp

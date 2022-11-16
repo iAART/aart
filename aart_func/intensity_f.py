@@ -1,17 +1,89 @@
 from aart_func import *
 from params import * 
 
-def gDisk(r,a,lamb):
+def Delta(r,a):
     """
-    Calculates the redshift factor for a photon outside the inner-most stable circular orbit(isco) (assume circular orbit)
+    Calculates the Kerr metric function \Delta(t)
     :param r: radius of the source
     :param a: spin of the black hole
-    :param lamb: angular momentum
-
-    :return: the redshift factor associated with the ray
     """
-    #Eqns (P4 B7)
-    return sqrt(r**3 - 3*r**2 + 2*a*r**(3/2))/(r**(3/2) - (lamb- a))
+    return r**2-2*r+a**2
+
+def PIF(r,a):
+    """
+    Calculates PI(r) (Eq. B6 P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    """
+    return (r**2+a**2)**2-a**2*Delta(r,a)
+
+def urbar(r,a):
+    """
+    Calculates the r (contravariant) component of the four velocity for radial infall
+    (Eq. B34b P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    """
+    return -np.sqrt(2*r*(r**2+a**2))/(r**2)
+
+def Omegabar(r,a):
+    """
+    Calculates the angular velocity of the radial infall
+    (Eq. B32a P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    """
+    return (2*a*r)/PIF(r,a)
+
+def Omegahat(r,a,laux):
+    """
+    Calculates the angular velocity of the sub-Keplerian orbit
+    (Eq. B39 P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    """
+    return (a+(1-2/r)*(laux-a))/(PIF(r,a)/(r**2)-(2*a*laux)/r)
+
+def uttilde(r, a,urT,OT):
+    """
+    Calculates the t (contravariant) component of the general four velocity
+    (Eq. B52 P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    :param urT: r (contravariant) component of the general four velocity
+    :param OT: Angular velocity of the general four velocity
+    """
+    return np.sqrt((1 + urT**2*r**2/Delta(r,a))/(1-(r**2+a**2)*OT**2-(2/r)*(1-a*OT)**2))
+
+def Ehat(r,a,laux):
+    """
+    Calculates the orbital energy of the sub-Keplerian flow
+    (Eq. B44a P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    :param laux: sub-Keplerian specific angular momentum
+    """
+    return np.sqrt(Delta(r,a)/(PIF(r,a)/(r**2)-(4*a*laux)/r-(1-2/r)*laux**2))
+
+def nuhat(r,a,laux,Ehataux):
+    """
+    Calculates the radial velocity of the sub-Keplerian flow
+    (Eq. B45 P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    :param laux: sub-Keplerian specific angular momentum
+    :param Ehataux: sub-Keplerian orbital energy
+    """
+    return r/Delta(r,a)*np.sqrt(np.abs(PIF(r,a)/(r**2)-(4*a*laux)/r-(1-2/r)*laux**2-Delta(r,a)/(Ehataux**2)))
+
+def lhat(r,a):
+    """
+    Calculates the rspecific angular momentum of the sub-Keplerian flow
+    (Eq. B44b P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    """
+    return sub_kep*(r**2+a**2-2*a*np.sqrt(r))/(np.sqrt(r)*(r-2)+a)
 
 def Rint(r,a,lamb,eta):
     """
@@ -26,42 +98,58 @@ def Rint(r,a,lamb,eta):
     #Eqns (P2 5)
     return (r**2 + a**2 - a*lamb)**2 - (r**2 - 2*r + a**2)*(eta + (lamb - a)**2)
 
-def gGas(r,b,a,lamb,eta):
+def gDisk(r,a,b,lamb,eta):
+    """
+    Calculates the redshift factor for a photon outside the inner-most stable circular orbit(isco) (assume circular orbit)
+    (Eq. B13 P1)
+    :param r: radius of the source
+    :param a: spin of the black hole
+    :param lamb: angular momentum
+    :param eta: Carter constant
+
+    :return: the redshift factor associated with the ray
+    """
+
+    OH=Omegahat(r,a,lhat(r,a))
+    OT=OH+(1-betaphi)*(Omegabar(r,a)-OH)
+    ur=(1-betar)*urbar(r,a)
+    ut=uttilde(r,a,ur,OT)
+    uphi=ut*OT
+    
+    return 1/(ut*(1-b*np.sign(ur)*sqrt(np.abs(Rint(r,a,lamb,eta)*ur**2))/Delta(r,a)/ut-lamb*uphi/ut))
+
+def gGas(r,a,b,lamb,eta):
     """
     Calculates the redshift factor for a photon inside the isco (assume infalling orbit)
+    (Eq. B13 P1)
     :param r: radius of the source
-    :param b: sign for the redshift
     :param a: spin of the black hole
+    :param b: sign for the redshift
     :param lamb: angular momentum
     :param eta: carter constant
 
     :return: the redshift factor associated with the ray
     """
-    #calculate radius of the inner-most stable circular orbit
+    #Calculate radius of the inner-most stable circular orbit
     isco=rms(a)
 
-    #Eqns (P2 2)
-    Delta=r**2 - 2*r + a**2
+    lms=lhat(isco,a)
+    OH=Omegahat(r,a,lms)
+    OT=OH+(1-betaphi)*(Omegabar(r,a)-OH)
 
-    #Eqns (P3 B13)
-    lambe=((isco**2 - 2*a*sqrt(isco) + a**2))/(isco**(3/2) - 2*sqrt(isco) + a)
-    #Eqns (P3 B12)
-    H=(2*r - a*lambe)/Delta
+    Ems=Ehat(isco,a,lms)
+    urhat=-Delta(r,a)/(r**2)*nuhat(r, a, lms ,Ems)*Ems
+    ur=urhat+(1-betar)*(urbar(r,a)-urhat)
+    ut=uttilde(r,a,ur,OT)
+    uphi=OT*ut
 
-    #Eqns (P3 B14)
-    gamma=sqrt(1 - 2/3 *1/isco)
-
-    #Eqns (P3 B9-B11)
-    ut=gamma*(1 + (2)/r *(1 + H))
-    uphi=gamma/r**2*(lambe + a*H)
-    ur=-np.sqrt(2/3/isco)*(isco/r - 1)**(3/2)
-    #Eqns (P3 B15)
-    return 1/(ut - uphi*lamb - ur*Delta**(-1)*b*sqrt(Rint(r,a,lamb,eta)))
+    return 1/(ut*(1-b*np.sign(ur)*sqrt(np.abs(Rint(r,a,lamb,eta)*ur**2))/Delta(r,a)/ut-lamb*uphi/ut))
 
 #calculate the observed brightness for a purely radial profile
 def bright_radial(grid,mask,redshift_sign,a,rs,isco,thetao):
     """
     Calculate the brightness of a rotationally symmetric disk
+    (Eq. 50 P1)
     :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
     :param mask: mask out the lensing band, see lb_f.py for detail
     :param redshift_sign: sign of the redshift
@@ -69,32 +157,37 @@ def bright_radial(grid,mask,redshift_sign,a,rs,isco,thetao):
     :param rs: source radius
     :param isco: radius of the inner-most stable circular orbit
     :param thetao: observer inclination
-    :hidden param profile: radial profile of the intensity
 
     :return: image of a lensed equitorial source with only radial dependence. 
     """
     alpha = grid[:,0][mask]
     beta = grid[:,1][mask]
+
     rs = rs[mask]
+
     lamb,eta = rt.conserved_quantities(alpha,beta,thetao,a)
+
     brightness = np.zeros(rs.shape[0])
     redshift_sign = redshift_sign[mask]
-    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,lamb[rs>=isco])**gfactor*ilp.profile(rs[rs>=isco],a,gammap,mup,sigmap)
 
-    brightness[rs<isco]= gGas(rs[rs<isco],redshift_sign[rs<isco],a,lamb[rs<isco],eta[rs<isco])**gfactor*ilp.profile(rs[rs<isco],a,gammap,mup,sigmap)
+    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])**gfactor*ilp.profile(rs[rs>=isco],a,gammap,mup,sigmap)
+    brightness[rs<isco]= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])**gfactor*ilp.profile(rs[rs<isco],a,gammap,mup,sigmap)
     
     r_p = 1+np.sqrt(1-a**2)
     brightness[rs<=r_p] = 0
     
     I = np.zeros(mask.shape)
     I[mask] = brightness
+    
     return(I)
+
 
 #calculate the observed brightness for an arbitrary profile, passed in as the interpolation object
 #but ignoring the time delay due to lensing
 def fast_light(grid,mask,redshift_sign,a,isco,rs,th,interpolation,thetao):
     """
     Calculate the black hole image ignoring the time delay due to lensing or geometric effect
+    (Eq. 116 P1)
     :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
     :param mask: mask out the lensing band, see lb_f.py for detail
     :param redshift_sign: sign of the redshift
@@ -115,12 +208,11 @@ def fast_light(grid,mask,redshift_sign,a,isco,rs,th,interpolation,thetao):
     brightness = np.zeros(rs.shape[0])
     redshift_sign = redshift_sign[mask]
 
-    #Eqs. 60 and 61 in 0706.0622
-    x_aux=np.sqrt(rs**2+a**2)*np.cos(th)
-    y_aux=np.sqrt(rs**2+a**2)*np.sin(th)
+    x_aux=rs*np.cos(th)
+    y_aux=rs*np.sin(th)
  
-    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,lamb[rs>=isco])**gfactor*interpolation(np.vstack([x_aux[rs>=isco],y_aux[rs>=isco]]).T)
-    brightness[rs<isco]= gGas(rs[rs<isco],redshift_sign[rs<isco],a,lamb[rs<isco],eta[rs<isco])**gfactor*interpolation(np.vstack([x_aux[rs<isco],y_aux[rs<isco]]).T)
+    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])**gfactor*interpolation(np.vstack([x_aux[rs>=isco],y_aux[rs>=isco]]).T)
+    brightness[rs<isco]= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])**gfactor*interpolation(np.vstack([x_aux[rs<isco],y_aux[rs<isco]]).T)
     
     r_p = 1+np.sqrt(1-a**2)
     brightness[rs<=r_p] = 0
@@ -133,6 +225,8 @@ def fast_light(grid,mask,redshift_sign,a,isco,rs,th,interpolation,thetao):
 def slow_light(grid,mask,redshift_sign,a,isco,rs,th,ts,interpolation,thetao):
     """
     Calculate the black hole image including the time delay due to lensing and geometric effect
+    (Eq. 50 P1)
+
     :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
     :param mask: mask out the lensing band, see lb_f.py for detail
     :param redshift_sign: sign of the redshift
@@ -155,12 +249,11 @@ def slow_light(grid,mask,redshift_sign,a,isco,rs,th,ts,interpolation,thetao):
     brightness = np.zeros(rs.shape[0])
     redshift_sign = redshift_sign[mask]
     
-    #Eqs. 60 and 61 in 0706.0622
-    x_aux=np.sqrt(rs**2+a**2)*np.cos(th)
-    y_aux=np.sqrt(rs**2+a**2)*np.sin(th)
+    x_aux=rs*np.cos(th)
+    y_aux=rs*np.sin(th)
 
-    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,lamb[rs>=isco])**gfactor*interpolation(np.vstack([ts[rs>=isco],x_aux[rs>=isco],y_aux[rs>=isco]]).T)
-    brightness[rs<isco]= gGas(rs[rs<isco],redshift_sign[rs<isco],a,lamb[rs<isco],eta[rs<isco])**gfactor*interpolation(np.vstack([ts[rs<isco],x_aux[rs<isco],y_aux[rs<isco]]).T)
+    brightness[rs>=isco]= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])**gfactor*interpolation(np.vstack([ts[rs>=isco],x_aux[rs>=isco],y_aux[rs>=isco]]).T)
+    brightness[rs<isco]= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])**gfactor*interpolation(np.vstack([ts[rs<isco],x_aux[rs<isco],y_aux[rs<isco]]).T)
 
     r_p = 1+np.sqrt(1-a**2)
     brightness[rs<=r_p] = 0
