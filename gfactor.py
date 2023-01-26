@@ -47,9 +47,9 @@ phi2=h5f['phi2'][:]
 h5f.close()
 
 
-i_g0 = obsint.gfactor(supergrid0,mask0,sign0,spin_case,isco,rs0,phi0,thetao)
-i_g1 = obsint.gfactor(supergrid1,mask1,sign1,spin_case,isco,rs1,phi1,thetao)
-i_g2 = obsint.gfactor(supergrid2,mask2,sign2,spin_case,isco,rs2,phi2,thetao)
+i_g0 = obsint.gfactorf(supergrid0,mask0,sign0,spin_case,isco,rs0,phi0,thetao)
+i_g1 = obsint.gfactorf(supergrid1,mask1,sign1,spin_case,isco,rs1,phi1,thetao)
+i_g2 = obsint.gfactorf(supergrid2,mask2,sign2,spin_case,isco,rs2,phi2,thetao)
 
 i_g0 = (i_g0).reshape(N0,N0).T
 i_g1 = (i_g1).reshape(N1,N1).T

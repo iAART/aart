@@ -302,7 +302,7 @@ def br_bv(supergrid0,mask0,N0,rs0,sign0):
 
     print("File ",filename," created.")
 
-def gfactor(grid,mask,redshift_sign,a,isco,rs,th,thetao):
+def gfactorf(grid,mask,redshift_sign,a,isco,rs,th,thetao):
     """
     Calculate the redshift factor
     :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
