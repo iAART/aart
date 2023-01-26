@@ -301,3 +301,40 @@ def br_bv(supergrid0,mask0,N0,rs0,sign0):
     h5f.close()
 
     print("File ",filename," created.")
+
+def gfactor(grid,mask,redshift_sign,a,isco,rs,th,thetao):
+    """
+    Calculate the redshift factor
+    :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
+    :param mask: mask out the lensing band, see lb_f.py for detail
+    :param redshift_sign: sign of the redshift
+    :param a: black hole spin
+    :param isco: radius of the inner-most stable circular orbit
+    :param rs: source radius
+    :param th: source angle, polar coordinate
+    :param thetao: observer inclination
+
+    :return: redshift factor at each point.
+
+    """
+    
+    alpha = grid[:,0][mask]
+    beta = grid[:,1][mask]
+    rs = rs[mask]
+    th = th[mask]
+    lamb,eta = rt.conserved_quantities(alpha,beta,thetao,a)
+    gfact = np.zeros(rs.shape[0])
+    redshift_sign = redshift_sign[mask]
+    
+    x_aux=rs*np.cos(th)
+    y_aux=rs*np.sin(th)
+
+    gfact[rs>=isco]= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])
+    gfact[rs<isco]= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])
+    
+    r_p = 1+np.sqrt(1-a**2)
+    gfact[rs<=r_p] = 0
+    
+    gs = np.zeros(mask.shape)
+    gs[mask] = gfact
+    return(gs)
