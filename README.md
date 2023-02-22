@@ -7,7 +7,7 @@ The code, described in detail in Ref. [1], implements all the relevant equations
 The use of AART in scientific publications must be properly acknowledged. Please cite:
 
 _______
-Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. "Adaptive Analytical Ray Tracing of Black Hole Photon Rings." [arXiv:2211.07469](https://arxiv.org/abs/2211.07469) 
+Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. "Adaptive Analytical Ray Tracing of Black Hole Photon Rings." Phys. Rev. D 107, 043030, 2023. [arXiv:2211.07469](https://arxiv.org/abs/2211.07469) 
 _______
 
 We also request that AART modifications or extensions leading to a scientific publication be made public as free software. 
@@ -183,13 +183,13 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## References ##
 
-[1] Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. Adaptive Analytical Ray Tracing of Black Hole Photon Rings. [arXiv:2211.07469](https://arxiv.org/abs/2211.07469)
+[1] Cardenas-Avendano, A., Lupsasca, A. & Zhu, H. Adaptive Analytical Ray Tracing of Black Hole Photon Rings. Physical Review D, 107, 043030, 2023. [arXiv:2211.07469](https://arxiv.org/abs/2211.07469)
 
-[2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101(4), 044031.
+[2] Gralla, S. E., & Lupsasca, A. (2020). Lensing by Kerr black holes. Physical Review D, 101, 044031.
 
-[3] Gralla, S. E., & Lupsasca, A. (2020). Null geodesics of the Kerr exterior. Physical Review D, 101(4), 044032.
+[3] Gralla, S. E., & Lupsasca, A. (2020). Null geodesics of the Kerr exterior. Physical Review D, 101, 044032.
 
-[4] Gralla, S. E., Lupsasca, A., & Marrone, D. P. (2020). The shape of the black hole photon ring: A precise test of strong-field general relativity. Physical Review D, 102(12), 124004.
+[4] Gralla, S. E., Lupsasca, A., & Marrone, D. P. (2020). The shape of the black hole photon ring: A precise test of strong-field general relativity. Physical Review D, 102, 124004.
 
 ## MIT License
 
