@@ -59,7 +59,7 @@ filename=path+"gfactors_a_%s_i_%s.h5"%(spin_case,i_case)
 
 h5f = h5py.File(filename, 'w')
 h5f.create_dataset('gs0', data=i_g0)
-h5f.create_dataset('gs1', data=i_g0)
-h5f.create_dataset('gs2', data=i_g0)
+h5f.create_dataset('gs1', data=i_g1)
+h5f.create_dataset('gs2', data=i_g2)
 
 h5f.close()
