@@ -110,8 +110,8 @@ path = './Results/'
 # Create a directory for the results
 isExist = os.path.exists(path)
 if not isExist:
-  os.makedirs(path)
-  print("A directory (Results) was created to store the results")
+    os.makedirs(path)
+    print("A directory (Results) was created to store the results")
 
 '''
 MIT license
