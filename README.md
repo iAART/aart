@@ -33,15 +33,15 @@ Last updated: 11.15.2022
 
 #### Python Libraries: 
 
-All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy >=1.8, matplotlib, multiprocessing, skimage) but some may not. 
+All the dependencies are located in the <em>requirements.txt</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy >=1.8, matplotlib, multiprocessing, skimage) but some may not. 
 
 To install any missing packages, run
   
-<code> pip install "package_name" </code>
+<code> pip install -r requirements.txt </code>
   
-or, if using anaconda, search for the missing packages and run, e.g. for h5py (Read and write HDF5 files from Python,) 
+or, if using anaconda,
   
-<code> conda install -c anaconda h5py</code>
+<code> conda install --yes --file requirements.txt </code>
 
 Sometimes scipy does not update automatically to the latest version. If that is the case, you may want to type 
 

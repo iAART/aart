@@ -1,0 +1,6 @@
+numpy
+matplotlib
+h5py
+imageio
+scipy >= 1.8
+scikit-image
