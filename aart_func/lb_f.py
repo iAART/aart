@@ -192,9 +192,10 @@ def round_up_to_even(f):
 def in_hull(p, hull):
     """
     Check if points in p are inside the concave hull
+    NB. There is a weird behaviour in the function (https://github.com/matplotlib/matplotlib/issues/9704), so we need to add that argument and a small number. 
     """
     concave=paths.Path(hull)
-    return concave.contains_points(p)
+    return concave.contains_points(p,radius=1e-9)
 
 def grid_mask(hull,hull2,dx,limits,force_lims = False):
     """
@@ -240,6 +241,7 @@ def hulls(alpha, beta, smin=0.5, smax=100,limi0=0.99,lime0=1.01,limi1=0.999,lime
     data=(np.append(alpha,alpha[::-1]), np.append(beta,-beta[::-1]))
 
     points_0i=np.zeros([data[0].size,2])
+    #Do this clockwise, to maximize the number of points contained in the hull. 
     points_0e=np.array([[-limits,-limits],[limits,-limits],[limits,limits],[-limits, limits]])
 
     points_1i=np.zeros([data[0].size,2])
