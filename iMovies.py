@@ -89,7 +89,7 @@ t2+=fact2
 print("AART starts!")
 
 i_dt = xtend/nt
-timeconversion=i_dt*MM87kg*Gc/cc**3/(3600*24) # [days]
+timeconversion=i_dt*MMkg*Gc/cc**3/(3600*24) # [days]
 
 interpolated3_R=RegularGridInterpolator((times,x1,x2),  np.transpose(data,(0,2,1)),fill_value=0,bounds_error=False,method='linear')
 

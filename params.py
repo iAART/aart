@@ -34,7 +34,7 @@ bvapp=0
 #If equal to 1, the sizes of the grids will be equal and an image can be computed
 #by summing the contributions    
 p_image=1
-limits=30
+limits=25
 #Resolution for the n=0 image [M]
 dx0 =0.02
 #Resolution for the n=1 image [M]

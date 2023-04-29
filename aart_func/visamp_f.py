@@ -1,6 +1,19 @@
 from aart_func import *
 from params import * 
 
+#Eq. 32 in 2206.02781
+def smooth_connection(x):
+    '''Infinitely smooth function, =0 for x<=0'''
+    if x<=0:
+        return 0
+    else:
+        return np.exp(-1.0/x**2)
+
+#Eq. 32 in 2206.02781`
+def smooth_plateau(x):
+    '''Infinitely smooth function, =0 for x<=0, =1 for x>=1'''
+    return smooth_connection(x)/(smooth_connection(x)+smooth_connection(1-x)) 
+
 def imagetreat(image,radonangle,limsn,lims0):
     # Computes the radon cut of an image and scales it
     NN = image.shape[0]
@@ -28,6 +41,15 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
         xvalues =np.round(np.arange(-limits,limits+dx, dx),4)
 
         R=R0(xvalues)+R1(xvalues)+R2(xvalues)
+        
+        xaxis1=np.linspace(-fov_Real,fov_Real,num=xvalues.shape[0]) # in muas
+        deltax1=xaxis1[1]-xaxis1[0]
+        
+        range_cutoff= 0.25*fov_Real/500
+        #Eq. 31 in 2206.02781
+        smooth_transition_to_zero = np.vectorize(smooth_plateau) (range_cutoff*(xaxis1[-1]-xaxis1)) * np.vectorize(smooth_plateau) (range_cutoff*(xaxis1+xaxis1[-1]))
+        
+        R*=smooth_transition_to_zero
 
         # Compute 1D FFT of the projection, shift and take modulus
         padding=16
@@ -35,8 +57,6 @@ def radon_cut(radonangles,I0,I1,I2,supergrid0,supergrid1,supergrid2,Ncut=0):
         radonshift=fftshift(radonff) # recenter FFT
         radonvisamp=np.abs(radonshift) # this is the visamp
 
-        xaxis1=np.linspace(-fov_Real,fov_Real,num=xvalues.shape[0]) # in muas
-        deltax1=xaxis1[1]-xaxis1[0]
         xfourier1=fftshift(fftfreq(padding*xvalues.shape[0],d=deltax1)) #re centered frequencies in muas^-1
         xfourier1/= 1e-6 * 1./3600. * np.pi/180. # in rad^-1
         xfourier1 /= 1e9 # in Glambda
