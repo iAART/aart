@@ -35,7 +35,7 @@ Last updated: 11.15.2022
 
 All the dependencies are located in the <em>init.py</em> file. Most of the libraries will come natively with anaconda (e.g., numpy, scipy >=1.8, matplotlib, multiprocessing, skimage) but some may not. 
 
-To install all requieriments*, run
+To install all requirements*, run
 
  <code> pip install -r requirements.txt </code>
 
