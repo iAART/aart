@@ -36,7 +36,7 @@ def KDisk(r,thetad,a,lamb,eta,Delta,redshift_sign,sqR):
     ut=(r**(3/2)+a)/xi
     uphi=1/xi
 
-    return kappaeq(r,a,lamb,eta,Delta,redshift_sign,sqR,ut,uphi,Bt_f(r,thetad,Delta,ut,uphi,a),Br_f(r,thetad,Delta,ut,uphi,a),Bth_f(r,thetad,Delta,ut,uphi,a),Bphi_f(r,thetad,Delta,ut,uphi,a))
+    return kappaeq(r,a,lamb,eta,Delta,redshift_sign,sqR,ut,ut*0.0,uphi,Bt_f(r,thetad,Delta,ut,uphi,a),Br_f(r,thetad,Delta,ut,uphi,a),Bth_f(r,thetad,Delta,ut,uphi,a),Bphi_f(r,thetad,Delta,ut,uphi,a))
 
 def KGas(r,thetad,a,lamb,eta,Delta,redshift_sign,sqR):
     """    
@@ -57,8 +57,9 @@ def KGas(r,thetad,a,lamb,eta,Delta,redshift_sign,sqR):
     #Eqns (P3 B9-B11)
     ut=gamma*(1 + 2/r *(1 + H))
     uphi=gamma/r**2*(lambe + a*H)
+    ur=-np.sqrt(2/3/isco)*(isco/r - 1)**(3/2)
 
-    return kappaeq(r,a,lamb,eta,Delta,redshift_sign,sqR,ut,uphi,Bt_f(r,thetad,Delta,ut,uphi,a),Br_f(r,thetad,Delta,ut,uphi,a),Bth_f(r,thetad,Delta,ut,uphi,a),Bphi_f(r,thetad,Delta,ut,uphi,a))
+    return kappaeq(r,a,lamb,eta,Delta,redshift_sign,sqR,ut,ur,uphi,Bt_f(r,thetad,Delta,ut,uphi,a),Br_f(r,thetad,Delta,ut,uphi,a),Bth_f(r,thetad,Delta,ut,uphi,a),Bphi_f(r,thetad,Delta,ut,uphi,a))
 
 def kappa(grid,mask,N,rs,redshift_sign,a,thetao):
     """

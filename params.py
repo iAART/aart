@@ -71,6 +71,13 @@ gammap=-3/2
 mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
 
+#Hotspot
+#Radius of the hotspot
+radhs=8
+#Radius of the hotspot
+velhs=0.01
+rwidth = 0.5
+
 #The power of the redshift factor
 gfactor=3
 

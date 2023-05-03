@@ -338,3 +338,54 @@ def gfactorf(grid,mask,redshift_sign,a,isco,rs,th,thetao):
     gs = np.zeros(mask.shape)
     gs[mask] = gfact
     return(gs)
+
+# orbit for the centroid with r=8 and phidot = 0.01
+# one may put arbitrary orbit here.
+def x0(t):
+    return(radhs*np.sin(t*velhs))
+
+def y0(t):
+    return(radhs*np.cos(t*velhs))
+
+def flare_model(grid,mask,redshift_sign,a,rs,th,ts,thetao,rwidth,delta_t):
+
+    """
+    Calculate the black hole image including the time delay due to lensing and geometric effect
+    :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
+    :param mask: mask out the lensing band, see lb_f.py for detail
+    :param redshift_sign: sign of the redshift
+    :param mbar: lensing band index 0,1,2,...
+    :param a: black hole spin
+    :param isco: radius of the inner-most stable circular orbit
+    :param rs: source radius
+    :param th: source angle, polar coordinate
+    :param ts: time of emission at the source
+    :param interpolation: a time series of 2 dimensional brightness function of the source, 3d interpolation object
+    :param thetao: observer inclination
+    
+    :return: image of a lensed equitorial source with only radial dependence. 
+    """
+
+    alpha = grid[:,0][mask]
+    beta = grid[:,1][mask]
+    rs = rs[mask]
+    th = th[mask]
+    ts = ts[mask]
+    lamb,eta = rt.conserved_quantities(alpha,beta,thetao,a)
+    brightness = np.zeros(rs.shape[0])
+    redshift_sign = redshift_sign[mask]
+    
+    x_aux = rs*np.cos(th)
+    y_aux = rs*np.sin(th)
+    # x0 and y0 is now a function of t, where one can specify an arbitrary equitorial orbit
+    brightness = np.exp(-(x_aux-x0(ts+delta_t))**2/rwidth**2-(y_aux-y0(ts+delta_t))**2/rwidth**2)
+    
+    brightness[rs>=isco]*= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])**gfactor
+    brightness[rs<isco]*= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])**gfactor
+
+    r_p = 1+np.sqrt(1-a**2)
+    brightness[rs<=r_p] = 0
+    
+    I = np.zeros(mask.shape)
+    I[mask] = brightness
+    return(np.nan_to_num(I))
