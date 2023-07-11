@@ -14,7 +14,7 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 11.15.2022
+Last updated: 07.11.2023
 
 ## AART's Components ##
 
