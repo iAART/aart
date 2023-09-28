@@ -1,6 +1,6 @@
 # Adaptive Analytical Ray Tracing (AART) #
 
-AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude on long interferometric baselines. It implements a non-uniform adaptive grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features, predicted by general relativity but not yet observed). 
+AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude on long interferometric baselines. It implements a non-uniform adaptive grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features predicted by general relativity but not yet observed). 
 
 The code, described in detail in Ref. [1], implements all the relevant equations required to compute the appearance of equatorial sources on the (far) observer's screen. We refer the Reader to Refs. [2-4] for the derivations and further details. Through the code, the equations are mentioned as Pi Eq. N, which means Eq. N in Ref. [i]. 
 
@@ -14,7 +14,7 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 07.11.2023
+Last updated: 09.28.2023
 
 ## AART's Components ##
 
@@ -58,6 +58,22 @@ Sometimes scipy does not update automatically to the latest version. If that is 
 <em>*Thanks to @prestonyun for suggesting this simplification.</em> 
 
 ## How to run AART ##
+
+### As python package:
+
+Simply [pip](https://pypi.org/project/aart/) install it like this:
+
+<code> pip install aart </code>
+
+In the notebook: 
+
+<em>AARTPackage_Examples.ipynb</em>
+
+the AART package is illustrated. This notebook also includes examples on how to calculate the diameters of the n=2 photon ring and a simple estimate of the spin and inclination of a BH. 
+
+<em>This Python package is maintained by Lennox Keeble, a brilliant Princeton undergraduate, who used aart for his junior paper.</em> 
+
+### From a terminal, using scripts: 
 
 The paramaters are always set in the file <em>params.py</em>. Once that file is modified.
 
@@ -189,6 +205,7 @@ The linear polarization of a given configuration of the magnetic field can be co
 - Alejandro Cardenas-Avendano (cardenas-avendano [at] princeton [dot] edu)
 - Hengrui Zhu
 - Alex Lupsasca
+- Lennox Keeble (python package creation and maintenance)
 
 ## References ##
 
