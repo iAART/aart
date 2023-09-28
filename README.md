@@ -59,7 +59,7 @@ Sometimes scipy does not update automatically to the latest version. If that is 
 
 ## How to run AART ##
 
-### As python package:
+### As a python package:
 
 Simply [pip](https://pypi.org/project/aart/) install it like this:
 
