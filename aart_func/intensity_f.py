@@ -145,6 +145,23 @@ def gGas(r,a,b,lamb,eta):
 
     return 1/(ut*(1-b*np.sign(ur)*sqrt(np.abs(Rint(r,a,lamb,eta)*ur**2))/Delta(r,a)/ut-lamb*uphi/ut))
 
+#TODO: This expression will just work for sure for the Keplerian velocity. 
+# I need to check if it has to be modified for the general four-velocity
+def CosAng(r,a,b,lamb,eta):
+    """
+    Calculates the cosine of the emission angle
+    :param r: radius of the source
+    :param a: spin of the black hole
+    :param lamb: angular momentum
+
+    :return: the  cosine of the emission angle
+    """
+    #From eta, solve for Sqrt(p_\theta/p_t)
+    kthkt=np.sqrt(eta+a**2-lamb**2/(np.tan(thetao)**2))
+    #Sqrt(g^{\theta\theta}) Evaluated at the equatorial plane
+    thth=1/r
+    return thth*gDisk(r,a,b,lamb,eta)*kthkt
+
 #calculate the observed brightness for a purely radial profile
 def bright_radial(grid,mask,redshift_sign,a,rs,isco,thetao):
     """
