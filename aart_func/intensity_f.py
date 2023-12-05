@@ -157,7 +157,7 @@ def CosAng(r,a,b,lamb,eta):
     :return: the  cosine of the emission angle
     """
     #From eta, solve for Sqrt(p_\theta/p_t)
-    kthkt=np.sqrt(eta+a**2-lamb**2/(np.tan(thetao)**2))
+    kthkt=np.sqrt(eta+a**2*np.cos(thetao)**2-lamb**2/(np.tan(thetao)**2))
     #Sqrt(g^{\theta\theta}) Evaluated at the equatorial plane
     thth=1/r
     return thth*gDisk(r,a,b,lamb,eta)*kthkt
