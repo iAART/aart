@@ -78,6 +78,14 @@ radhs=8
 velhs=0.01
 rwidth = 0.5
 
+# Useful for disk visualizations or when studying truncated disks.
+# 0: Neglected
+# 1: Radii computed up to thar radius
+# 2: Adds 5M to r_cutoff for interpolation purposes. 
+imag_cut=0
+# Cutoff radius   
+r_cutoff=20
+
 #The power of the redshift factor
 gfactor=3
 

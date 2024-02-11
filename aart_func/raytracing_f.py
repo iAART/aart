@@ -569,6 +569,11 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     
     maskkk[rs<=r_p] = np.nan
 
+    if imag_cut==1:
+        maskkk[rs>=r_cutoff] = np.nan
+    elif imag_cut==2:
+        maskkk[rs>=r_cutoff+5] = np.nan
+
     return(rs*maskkk,redshift_sign*maskkk,deltat*maskkk,deltaphi*maskkk)
 
 def rs_bv(grid,mask):
