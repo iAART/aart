@@ -244,7 +244,7 @@ def hulls(alpha, beta, smin=0.5, smax=100,limi0=0.99,lime0=1.01,limi1=0.999,lime
     #Do this clockwise, to maximize the number of points contained in the hull. 
     points_0e=np.array([[-limits,-limits],[limits,-limits],[limits,limits],[-limits, limits]])
 
-    points_1i=  
+    points_1i=np.zeros([data[0].size,2])  
     points_1e=np.zeros([data[0].size,2])
 
     points_2i=np.zeros([data[0].size,2])
