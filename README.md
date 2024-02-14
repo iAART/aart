@@ -14,7 +14,7 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 09.28.2023
+Last updated: 02.14.2024
 
 ## AART's Components ##
 
@@ -55,6 +55,12 @@ Sometimes scipy does not update automatically to the latest version. If that is 
 
 <code> pip install -U scipy</code>
 
+Some users have experienced an issue with <em>imageio.v2</em>, as it is not found. To solve this issue please type:
+
+<code> python -m pip install --upgrade pip </code>
+
+<code> pip install imageio --upgrade </code>
+
 <em>*Thanks to @prestonyun for suggesting this simplification.</em> 
 
 ## How to run AART ##
@@ -87,7 +93,7 @@ The lensing bands are computed by simply running
 
   <code> python lensingbands.py </code>
   
-The result will be stored in a HDF5 file that contains the values of the Bardeen's coordinates withing each lensing band. The datasets inside the resulting file are:
+The result will be stored in a HDF5 file that contains the values of the Bardeen's coordinates within each lensing band. The datasets inside the resulting file are:
 
 * alpha: The coordinate alpha of the critical curve. The parameter <em>npointsS</em> controls the number of points used for the computation of the critical curve)
 * beta: The coordinate beta of the critical curve. 
