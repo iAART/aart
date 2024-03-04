@@ -319,7 +319,7 @@ def br_bv(supergrid0,mask0,N0,rs0,sign0):
 
     print("File ",filename," created.")
 
-def gfactorf(grid,mask,redshift_sign,a,isco,rs,th,thetao):
+def gfactorf(grid,mask,redshift_sign,a,isco,rs,thetao):
     """
     Calculate the redshift factor
     :param grid: alpha and beta grid on the observer plane on which we evaluate the observables
@@ -328,7 +328,6 @@ def gfactorf(grid,mask,redshift_sign,a,isco,rs,th,thetao):
     :param a: black hole spin
     :param isco: radius of the inner-most stable circular orbit
     :param rs: source radius
-    :param th: source angle, polar coordinate
     :param thetao: observer inclination
 
     :return: redshift factor at each point.
@@ -343,9 +342,6 @@ def gfactorf(grid,mask,redshift_sign,a,isco,rs,th,thetao):
     gfact = np.zeros(rs.shape[0])
     redshift_sign = redshift_sign[mask]
     
-    x_aux=rs*np.cos(th)
-    y_aux=rs*np.sin(th)
-
     gfact[rs>=isco]= gDisk(rs[rs>=isco],a,redshift_sign[rs>=isco],lamb[rs>=isco],eta[rs>=isco])
     gfact[rs<isco]= gGas(rs[rs<isco],a,redshift_sign[rs<isco],lamb[rs<isco],eta[rs<isco])
     
