@@ -16,8 +16,9 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-
+_______
 ![GitHub last commit](https://img.shields.io/github/last-commit/iAART/aart)
+_______
 
 ## AART's Components ##
 
