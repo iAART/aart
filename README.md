@@ -1,3 +1,5 @@
+[![2211.07469](https://img.shields.io/badge/arXiv-2211.07469-b31b1b.svg)](https://arxiv.org/abs/2211.07469) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/iAART/aart/License.txt) [![GitHub repo stars](https://img.shields.io/github/stars/iAART/aart?style=social)](https://github.com/iAART/aart)
+
 # Adaptive Analytical Ray Tracing (AART) #
 
 AART is a numerical framework that exploits the integrability properties of the Kerr spacetime to compute high-resolution black hole images and their visibility amplitude on long interferometric baselines. It implements a non-uniform adaptive grid on the image plane suitable to study black hole photon rings (narrow ring-shaped features predicted by general relativity but not yet observed). 
@@ -14,7 +16,7 @@ We also request that AART modifications or extensions leading to a scientific pu
 
 <center> <em>Feel free to use images and movies produced with this code (with attribution) for your next presentation! </em> </center>
 
-Last updated: 02.14.2024
+![GitHub last commit](https://img.shields.io/github/last-commit/iAART/aart)
 
 ## AART's Components ##
 
