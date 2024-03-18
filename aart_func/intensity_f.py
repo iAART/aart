@@ -337,7 +337,6 @@ def gfactorf(grid,mask,redshift_sign,a,isco,rs,thetao):
     alpha = grid[:,0][mask]
     beta = grid[:,1][mask]
     rs = rs[mask]
-    th = th[mask]
     lamb,eta = rt.conserved_quantities(alpha,beta,thetao,a)
     gfact = np.zeros(rs.shape[0])
     redshift_sign = redshift_sign[mask]
