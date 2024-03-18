@@ -127,13 +127,12 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     
     return(G_theta,G_phi,G_t)
 
-def source_radius2_inf(r1,r2,r3,r4,G_theta,alpha):
+def source_radius2_inf(r1,r2,r3,r4,G_theta):
     '''
     Computes radius for the equitorial source of a photon with Type II trajectory
     (outside the critical curve, one turning point, scattering) in Boyer-Lindquist coordinates
     :param r1-4: radial turning points
     :param G_theta: the angular path integral, G_theta=I_r=Mino time
-    :param alpha: x coordinate on the image plane
 
     :returns:  radius of the equitorial source
     '''
@@ -179,14 +178,13 @@ def source_radius2(r,r1,r2,r3,r4,G_theta):
     rs2 = np.nan_to_num((r4*r31-r3*r41*sn_square)/(r31-r41*sn_square))
     return(rs2)
 
-def source_radius3_inf(r1,r2,r3,r4,G_theta,alpha):
+def source_radius3_inf(r1,r2,r3,r4,G_theta):
     '''
     Computes radius for the equitorial source of a photon with Type III trajectory
     (inside the critical curve, generated at the horizon, no turning points) in Boyer-Lindquist coordinates
     assuming that the observer is at infinity
     :param r1-4: radial turning points
     :param G_theta: the angular path integral, G_theta=I_r=Mino time
-    :param alpha: x coordinate on the image plane
     :returns:  radius of the equitorial source
     '''
 
@@ -570,8 +568,8 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     rs2 = source_radius2(distance,r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2])
     rs3 = source_radius3(distance,r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3])
 
-    #rs2 = source_radius2_inf(r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2],eta[mask2])
-    #rs3 = source_radius3_inf(r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3],eta[mask3])
+    #rs2 = source_radius2_inf(r1[mask2],r2[mask2],r3[mask2],r4[mask2],G_theta[mask2])
+    #rs3 = source_radius3_inf(r1[mask3],r2[mask3],r3[mask3],r4[mask3],G_theta[mask3])
 
     rs = np.zeros(mask.shape)
     r_mask = np.zeros(rs[mask].shape)
