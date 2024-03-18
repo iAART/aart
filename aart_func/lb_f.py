@@ -5,7 +5,7 @@ from params import *
 def OverRint(r,a,lamb,eta):
     return 1/sqrt((r**2 + a**2 - a*lamb)**2 - (r**2 - 2*r + a**2)*(eta + (lamb - a)**2))
     
-def ApparentBH(s,a,thetao,alpha,beta,m,sign,distance=10000):
+def ApparentBH(s,a,thetao,alpha,beta,m,sign,distance=D_obs):
 
     alpha= s*alpha
     beta= s*beta

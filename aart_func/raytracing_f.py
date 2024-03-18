@@ -127,6 +127,30 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     
     return(G_theta,G_phi,G_t)
 
+def source_radius2_inf(r1,r2,r3,r4,G_theta,alpha):
+    '''
+    Computes radius for the equitorial source of a photon with Type II trajectory
+    (outside the critical curve, one turning point, scattering) in Boyer-Lindquist coordinates
+    :param r1-4: radial turning points
+    :param G_theta: the angular path integral, G_theta=I_r=Mino time
+    :param alpha: x coordinate on the image plane
+
+    :returns:  radius of the equitorial source
+    '''
+    # Eqs. (31-32 P1)
+    r31 = (r3-r1)
+    r32 = (r3-r2)
+    r41 = (r4-r1)
+    r42 = (r4-r2)
+    r21 = (r2-r1)
+
+    k2 = r32*r41/r31/r42
+
+    # Eqs. (30 P1)
+    F2 = ellipf(np.arcsin(np.sqrt(r31/r41).real),(k2).real)
+    sn_square = np.square(ellipj(1/2*np.sqrt(r31*r42).real*G_theta-F2, (k2).real)[0])
+    rs2 = np.nan_to_num((r4*r31-r3*r41*sn_square)/(r31-r41*sn_square))
+    return(rs2)
 
 def source_radius2(r,r1,r2,r3,r4,G_theta):
     '''
