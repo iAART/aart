@@ -7,8 +7,11 @@ def OverRint(r,a,lamb,eta):
     
 def ApparentBH(s,a,thetao,alpha,beta,m,sign,distance=D_obs):
 
-    alpha= s*alpha
-    beta= s*beta
+    rho=np.sqrt(alpha**2+beta**2)
+    varphi=np.arctan2(beta,alpha)
+
+    alpha= s*rho*np.cos(varphi)
+    beta= s*rho*np.sin(varphi)
     
     # Photon conserved quantities
     # Eqs. (55 P1)
@@ -20,12 +23,12 @@ def ApparentBH(s,a,thetao,alpha,beta,m,sign,distance=D_obs):
     # Roots of angular potentail
     uP = DeltaTheta + sqrt(DeltaTheta**2 + eta/a**2) # Eq. (11 P1)
     uM = DeltaTheta - sqrt(DeltaTheta**2 + eta/a**2) # Eq. (11 P1)
-    
+
     #Outer horizon of the BH
     rP = 1 + np.sqrt(1 - a**2)
 
     #We perform the integration Eq. 8a using Eq. 20 P1 in order to get zero. 
-    return sqrt(-uM*a**2)*quad(OverRint, rP,distance,args=(a,lamb,eta))[0] +sign*ellipf(np.arcsin(np.cos(thetao)/np.sqrt(uP)), uP/uM) -2*m*ellipk(uP/uM) 
+    return sqrt(-uM*a**2)*quad(OverRint, rP,distance,args=(a,lamb,eta),points=[rP,10000])[0] +sign*ellipf(np.arcsin(np.cos(thetao)/np.sqrt(uP)), uP/uM) -2*m*ellipk(uP/uM) 
 
 def nlayers(s,a,thetao,thetad,alpha,betai,mbar):
     '''
@@ -257,7 +260,7 @@ def hulls(alpha, beta, smin=0.5, smax=100,limi0=0.99,lime0=1.01,limi1=0.999,lime
             m1=optimize.root(ApparentBH, limi0, args=(spin_case,thetao,data[0][i],data[1][i],0,-1,D_obs))
 
         points_0i[i]=m1.x[0]*np.array([data[0][i],data[1][i]])
-        
+                
         m1=optimize.root(nlayers, limi1, args=(spin_case,thetao,thetad,data[0][i],data[1][i],1))
         m2=optimize.root(nlayers, lime1, args=(spin_case,thetao,thetad,data[0][i],data[1][i],1))
 
