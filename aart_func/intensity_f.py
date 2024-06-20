@@ -152,7 +152,9 @@ def CosAng(r,a,b,lamb,eta):
     Calculates the cosine of the emission angle
     :param r: radius of the source
     :param a: spin of the black hole
+    :param b: sign for the redshift
     :param lamb: angular momentum
+    :param eta: Carter constant
 
     :return: the  cosine of the emission angle
     """

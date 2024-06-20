@@ -81,3 +81,6 @@ import aart_func.visamp_f as vamp
 #Polarization
 from mpmath import polylog as polylog2
 import aart_func.polarization_f as polarizationk
+
+#Magnetic Field
+import aart_func.magneticfield_f as magneticf

@@ -4,9 +4,9 @@ print("\nThanks for using AART")
 print("Copyright (C) 2024, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 
 #BH's Spin
-spin_case=0.99
+spin_case=0.94
 #Observer's inclination  
-i_case=89
+i_case=17
 
 # Distance to the BH in meters (default: M87)
 dBH=5.214795112e23  
@@ -33,14 +33,14 @@ bvapp=0
 #Limits for the image [M]. It should coincide with the inoisy if used.
 #If equal to 1, the sizes of the grids will be equal and an image can be computed
 #by summing the contributions    
-p_image=0
-limits=20
+p_image=1
+limits=25
 #Resolution for the n=0 image [M]
-dx0=1
+dx0=0.02
 #Resolution for the n=1 image [M]
-dx1=5
+dx1=0.02
 #Resolution for the n=2 image [M]
-dx2=5
+dx2=0.02
 
 # Projection angles for the radon transformation
 radonangles=[0,90]
@@ -70,6 +70,10 @@ isco = rms(spin_case)
 gammap=-3/2
 mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
+
+#Magnetic field parametrs
+cr=1.0
+cphi=0.0
 
 #Hotspot
 #Radius of the hotspot
