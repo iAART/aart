@@ -4,16 +4,16 @@ print("\nThanks for using AART")
 print("Copyright (C) 2024, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 
 #BH's Spin
-spin_case=0.94
+spin_case=0.99
 #Observer's inclination  
-i_case=17
+i_case=89
 
 # Distance to the BH in meters (default: M87)
 dBH=5.214795112e23  
 # BH mass-to-distance ratio (default: 1/psi= 6.2e9 Kg)
 psi=1.07473555940836 
 #Observer's distance in units of M
-D_obs=10000 
+D_obs=1e10
 
 #Velocity Profile for the gas
 
@@ -33,14 +33,14 @@ bvapp=0
 #Limits for the image [M]. It should coincide with the inoisy if used.
 #If equal to 1, the sizes of the grids will be equal and an image can be computed
 #by summing the contributions    
-p_image=1
-limits=25
+p_image=0
+limits=20
 #Resolution for the n=0 image [M]
-dx0=0.02
+dx0=1
 #Resolution for the n=1 image [M]
-dx1=0.02
+dx1=5
 #Resolution for the n=2 image [M]
-dx2=0.02
+dx2=5
 
 # Projection angles for the radon transformation
 radonangles=[0,90]
