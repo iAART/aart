@@ -30,8 +30,11 @@ _______
 
 * **Visibility Amplitudes**: The main functions are located in <em>visamp_f.py</em>: It computes the visibility amplitudes for given intensities over $n$ lensing bands. 
 
-* **Polarization**: For a given magnetic field configuration (specified in the file <em>polarization_f</em>), it parallel transports the linear polarization of a photon. 
+* **Polarization**: For a given magnetic field configuration (specified in the file <em>polarization_f</em>), it parallel transports the linear polarization of a photon.
 
+* **Theta_B**: For a given magnetic field configuration (specified in the file <em>magneticfield_f</em>), it returns the cosine square of the the angle between the field 𝑏𝜇 and photon momentum 𝑘𝜇.
+
+* **Redshift**: For a given geometry it returns the redshift factor. 
 
 ## Dependencies ##
 
