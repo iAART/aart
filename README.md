@@ -212,10 +212,14 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ## Authors ##
 
-- Alejandro Cardenas-Avendano (cardenas-avendano [at] princeton [dot] edu)
+### Current Developers ###
+
+- Alejandro Cardenas-Avendano (cardenas-avendano [at] lanl [dot] gov)
+- Lennox Keeble
+
+### Former Developers ###
 - Hengrui Zhu
 - Alex Lupsasca
-- Lennox Keeble (python package creation and maintenance)
 
 ## References ##
 
