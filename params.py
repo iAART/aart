@@ -72,8 +72,8 @@ mup=1-sqrt(1-spin_case**2)
 sigmap=1/2 
 
 #Magnetic field parametrs
-cr=1.0
-cphi=0.0
+cr=0.0
+cphi=1.0
 
 #Hotspot
 #Radius of the hotspot

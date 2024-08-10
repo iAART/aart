@@ -103,6 +103,7 @@ def gDisk(r,a,b,lamb,eta):
     Calculates the redshift factor for a photon outside the inner-most stable circular orbit(isco) (assume circular orbit)
     (Eq. B13 P1)
     :param r: radius of the source
+    :param b: The +- sign of p^r
     :param a: spin of the black hole
     :param lamb: angular momentum
     :param eta: Carter constant
