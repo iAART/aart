@@ -59,14 +59,26 @@ nt = data.shape[0] #inoisy time resolution
 ni = data.shape[1] #inoisy x resolution
 nj = data.shape[2] #inoisy y resolution
 
-xtstart = np.array(hf['params/x0start'])[0]
-xtend = np.array(hf['params/x0end'])[0]
+try: 
+	xtstart = np.array(hf['params/x0start'])[0]
+	xtend = np.array(hf['params/x0end'])[0]
 
-x1start = np.array(hf['params/x1start'])[0]
-x2start = np.array(hf['params/x2start'])[0]
+	x1start = np.array(hf['params/x1start'])[0]
+	x2start = np.array(hf['params/x2start'])[0]
 
-x1end = np.array(hf['params/x1end'])[0]
-x2end = np.array(hf['params/x2end'])[0]
+	x1end = np.array(hf['params/x1end'])[0]
+	x2end = np.array(hf['params/x2end'])[0]
+
+except:
+	xtstart = np.array(hf['params/x0start'])
+	xtend = np.array(hf['params/x0end'])
+
+	x1start = np.array(hf['params/x1start'])
+	x2start = np.array(hf['params/x2start'])
+
+	x1end = np.array(hf['params/x1end'])
+	x2end = np.array(hf['params/x2end'])
+
 
 x1 = np.linspace(x1start, x1end, ni) 
 x2 = np.linspace(x2start, x2end, nj)
@@ -98,7 +110,7 @@ if disk=="dynamical":
 
 	print("Using all the available inoisy frames")
 
-	interpolated3_R=RegularGridInterpolator((times,x1,x2), np.transpose(data,(0,2,1)),fill_value=0,bounds_error=False,method='linear')
+	interpolated3_R=RegularGridInterpolator((times,x1,x2), data,fill_value=0,bounds_error=False,method='linear')
 
 	print("Computing lensed image using all inoisy frames")
 
@@ -125,7 +137,7 @@ else:
 
 	print("Using a single inoisy frame")
 
-	interpolated2_R=RegularGridInterpolator((x1,x2), data[i_frame,:,:].T,fill_value=0,bounds_error=False,method='linear')
+	interpolated2_R=RegularGridInterpolator((x1,x2), data[i_frame,:,:],fill_value=0,bounds_error=False,method='linear')
 
 	print("Computing a lensed image")
 

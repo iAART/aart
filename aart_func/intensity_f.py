@@ -354,13 +354,13 @@ def gfactorf(grid,mask,redshift_sign,a,isco,rs,thetao):
     gs[mask] = gfact
     return(gs)
 
-# orbit for the centroid with r=8 and phidot = 0.01
-# one may put arbitrary orbit here.
+# orbit for the centroid with radhs=Radius of the hotspot and velhs = 0.01 (angular frequency)
+# one may put an arbitrary orbit
 def x0(t):
-    return(radhs*np.sin(t*velhs))
+    return(radhs*np.cos(t*velhs))
 
 def y0(t):
-    return(radhs*np.cos(t*velhs))
+    return(radhs*np.sin(t*velhs))
 
 def flare_model(grid,mask,redshift_sign,a,rs,th,ts,thetao,rwidth,delta_t):
 

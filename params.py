@@ -13,7 +13,7 @@ dBH=5.214795112e23
 # BH mass-to-distance ratio (default: 1/psi= 6.2e9 Kg)
 psi=1.07473555940836 
 #Observer's distance in units of M
-D_obs=1e10
+D_obs=1e5
 
 #Velocity Profile for the gas
 
@@ -50,6 +50,7 @@ fudge=1.5 #Fudge factor (For n>0)
 
 # Sample Equatorial Profile
 i_fname="inoisy.h5"
+#i_fname="hotspot.h5"
 
 # Stationary assumes a single inoisy frame. "stationary" or "dynamical" 
 disk="dynamical" 
@@ -77,10 +78,10 @@ cphi=1.0
 
 #Hotspot
 #Radius of the hotspot
-radhs=8
+radhs=8#2.2
 #Radius of the hotspot
-velhs=0.01
-rwidth = 0.5
+velhs=0.05#0.2
+rwidth = 0.5 #0.1
 
 # Useful for disk visualizations or when studying truncated disks.
 # 0: Neglected
