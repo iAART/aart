@@ -46,10 +46,4 @@ def cos2angB_f(grid,mask,N,rs,redshift_sign,a,thetao):
     cos2thB = np.zeros(mask.shape)
     cos2thB[mask] = cos2angB
 
-    filename=path+"MagneticAngle_a_%s_i_%s.h5"%(spin_case,i_case)
-    h5f = h5py.File(filename, 'w')
-
-    h5f.create_dataset('cos2angB',data=cos2thB.reshape(N,N).T)
-    h5f.close()
-
-    print("File ",filename," created.")
+    return cos2thB
