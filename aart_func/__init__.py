@@ -27,6 +27,7 @@ from scipy.special import ellipkinc as ellipf
 from scipy.special import ellipj
 from scipy.special import elliprj
 from scipy.integrate import cumtrapz,quad
+from scipy import signal
 
 #Required for the wrapper for elliptic integral of the third kind
 #import ctypes
