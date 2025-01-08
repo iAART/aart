@@ -62,9 +62,11 @@ Sometimes scipy does not update automatically to the latest version. If that is 
 
 <code> pip install -U scipy</code>
 
-##### Known potential issues/deprecations:
+#### Known potential issues/deprecations:
 
-**imageio.v2:** Some users have experienced an issue with <em>imageio.v2</em>, as it is not found. To solve this issue please type:
+**imageio.v2:** 
+
+Some users have experienced an issue with <em>imageio.v2</em>, as it is not found. To solve this issue please type:
 
 <code> python -m pip install --upgrade pip </code>
 
