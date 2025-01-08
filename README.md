@@ -62,13 +62,33 @@ Sometimes scipy does not update automatically to the latest version. If that is 
 
 <code> pip install -U scipy</code>
 
-Some users have experienced an issue with <em>imageio.v2</em>, as it is not found. To solve this issue please type:
+##### Known potential issues/deprecations:
+
+**imageio.v2:** Some users have experienced an issue with <em>imageio.v2</em>, as it is not found. To solve this issue please type:
 
 <code> python -m pip install --upgrade pip </code>
 
 <code> pip install imageio --upgrade </code>
 
-<em>*Thanks to @prestonyun for suggesting this simplification.</em> 
+**SciPy modules:** 
+
+Since SciPy 1.14 <em>scipy.integrate.cumtrapz</em> was removed in favour of <em>scipy.integrate.cumulative_trapezoid</em>. We have decided not to yet support, by default, SciPy 1.14 to prevent possible stability issues. In particular, when one does from a previous installation
+
+<code> conda update -all </code>
+
+This command accepts a list of package names and updates them to the latest versions that are compatible with <em>all</em>s other packages in the environment. The enviroment we have created for the pip and our local installations work well with SciPy 1.10. 
+
+Thus, if you are using a new version (>=1.14) of SciPy please replace
+
+<code>from scipy.integrate import cumtrapz, quad</code>
+
+in <em>aart_func/_init_.py</em> for these two lines:
+
+<code>from scipy.integrate import quad </code>
+
+<code> import scipy.integrate.cumulative_trapezoid as cumtrapz </code>
+
+In this way, you will modify the code minimally. 
 
 ## How to run AART ##
 
