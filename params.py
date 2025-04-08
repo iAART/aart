@@ -1,7 +1,7 @@
 from aart_func import *
 
 print("\nThanks for using AART")
-print("Copyright (C) 2024, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
+#print("Copyright (C) 2025, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 
 #BH's Spin
 spin_case=0.94

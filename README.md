@@ -80,17 +80,11 @@ Since SciPy 1.14 <em>scipy.integrate.cumtrapz</em> was removed in favour of <em>
 
 This command accepts a list of package names and updates them to the latest versions that are compatible with <em>all</em>s other packages in the environment. The enviroment we have created for the pip and our local installations work well with SciPy 1.10. 
 
-Thus, if you are using a new version (>=1.14) of SciPy please replace
+Thus, if you are using an old version (<1.14) you will have to use 
 
 <code>from scipy.integrate import cumtrapz, quad</code>
 
-in <em>aart_func/_init_.py</em> for these two lines:
-
-<code>from scipy.integrate import quad </code>
-
-<code> import scipy.integrate.cumulative_trapezoid as cumtrapz </code>
-
-In this way, you will modify the code minimally. 
+in <em>aart_func/_init_.py</em>. 
 
 ## How to run AART ##
 

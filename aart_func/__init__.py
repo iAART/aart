@@ -1,5 +1,5 @@
 '''
-Copyright (C) 2024, Alejandro Cardenas-Avendano, Alex Lupsasca & Hengrui Zhu
+Copyright (C) 2025, Alejandro Cardenas-Avendano, Hengrui Zhu & Alex Lupsasca
 This program is free software: you can redistribute it and/or modify it under 
 the terms of the GNU General Public License as published by the Free Software Foundation, 
 either version 3 of the License, or (at your option) any later version.
@@ -26,7 +26,8 @@ from scipy.special import ellipk, ellipeinc, ellipe
 from scipy.special import ellipkinc as ellipf
 from scipy.special import ellipj
 from scipy.special import elliprj
-from scipy.integrate import cumtrapz,quad
+from scipy.integrate import quad 
+from scipy.integrate import cumulative_trapezoid as cumtrapz
 from scipy import signal
 
 #Required for the wrapper for elliptic integral of the third kind

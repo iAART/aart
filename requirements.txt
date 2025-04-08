@@ -1,6 +1,6 @@
 numpy
 matplotlib
-scipy >= 1.8
+scipy >= 1.14
 h5py
 scikit-image
 imageio
