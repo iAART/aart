@@ -1,7 +1,6 @@
 from aart_func import *
 
 print("\nThanks for using AART")
-#print("Copyright (C) 2025, A. Cardenas-Avendano, H. Zhu & A. Lupsasca\n")
 
 #BH's Spin
 spin_case=0.94
@@ -54,6 +53,7 @@ i_fname="inoisy.h5"
 
 # Stationary assumes a single inoisy frame. "stationary" or "dynamical" 
 disk="dynamical" 
+p_brisk=0.0
 
 # inoisy initial time frame for single images
 i_frame=0
@@ -64,6 +64,8 @@ i_tM=0
 f_tM=12
 #Number of snapshots in that range    
 snapshots=12
+
+tsnap_plot=1
 
 isco = rms(spin_case)
 # SU's parameters for the envelope 

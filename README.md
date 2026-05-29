@@ -186,6 +186,10 @@ This gif is produced in the example code:
 
 <img src='BHMovie.gif' width="400" align="center">
 
+##### Light-mode prescription:
+
+AART now includes a light-propagation prescription based on [Rojas-Paternina & Cárdenas-Avendaño, *Light Propagation Prescriptions for Black Hole Movies*](https://arxiv.org/abs/2605.12659). This prescription accounts for the distribution of Kerr null-geodesic travel times across the observer screen, allowing black-hole movie frames to retain the propagation-induced time-delay structure associated with different lensing bands. Its use is demonstrated in `ExampleBriskLight.ipynb`.
+
 #### Visibility Amplitudes:
 
 With the images created using radial intensity prifiles, one may then calculate the visibility of the image projected onto a baseline. This function first performs radon transforms of the image at a set of specified angles (radonangles in <em>params.py</em>), and then compute the visibility amplitude by 
@@ -219,6 +223,7 @@ The linear polarization of a given configuration of the magnetic field can be co
   * EVPA_x: The x-component of the the electric-vector position angle.
   * EVPA_y: The y-component of the the electric-vector position angle.
 
+
 ## Limitations and known possible performance bottlenecks ##
 
 * This code has only been tested on Mac OS (M1 and Intel) and on Ubuntu. 
@@ -233,12 +238,15 @@ The linear polarization of a given configuration of the magnetic field can be co
 
 ### Current Developers ###
 
-- Alejandro Cardenas-Avendano (cardenas-avendano [at] lanl [dot] gov)
-- Lennox Keeble
+- Alejandro Cardenas-Avendano (alejandro [at] wfu [dot] edu)
 
 ### Former Developers ###
+- Daniel Rojas-Paternina
+- Lennox Keeble
+- Tej Desire
 - Hengrui Zhu
 - Alex Lupsasca
+
 
 ## References ##
 

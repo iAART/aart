@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
 p.close()
 
-filename=path+"Images_a_%s_i_%s.h5"%(spin_case,i_case)
+filename=path+"Images_a_%s_i_%s_%s.h5"%(spin_case,i_case,i_fname[:-3])
 
 h5f = h5py.File(filename, 'w')
 h5f.create_dataset('bghts0', data=np.array(I0s))
