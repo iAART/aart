@@ -48,10 +48,13 @@ def radial_turning_points(alpha,beta,lam,eta,a):
     Q = -A/3*((A/6)**2-C)-B**2/8
     
     # Eqs. (A7 P2)
-    pp = -Q/2+np.sqrt((P/3)**3+(Q/2)**2+0*1j)
-    mm = -Q/2-np.sqrt((P/3)**3+(Q/2)**2+0*1j)
+    # The square root takes the sign that avoids cancellation in pp, and w_m follows
+    # from w_p*w_m = -P/3, which keeps full precision where P is close to zero
+    sq = np.sqrt((P/3)**3+(Q/2)**2+0*1j)
+    sq = np.where(Q*sq.real > 0, -sq, sq)
+    pp = -Q/2+sq
     w_p = cuberoot(pp)
-    w_m = cuberoot(mm)
+    w_m = np.where(w_p == 0, 0, -P/3/np.where(w_p == 0, 1, w_p))
 
     # Eqs. (A6 P2)
     z = np.sqrt((w_p+w_m)/2 - A/6)
