@@ -48,10 +48,13 @@ def radial_turning_points(alpha,beta,lam,eta,a):
     Q = -A/3*((A/6)**2-C)-B**2/8
     
     # Eqs. (A7 P2)
-    pp = -Q/2+np.sqrt((P/3)**3+(Q/2)**2+0*1j)
-    mm = -Q/2-np.sqrt((P/3)**3+(Q/2)**2+0*1j)
+    # The square root takes the sign that avoids cancellation in pp, and w_m follows
+    # from w_p*w_m = -P/3, which keeps full precision where P is close to zero
+    sq = np.sqrt((P/3)**3+(Q/2)**2+0*1j)
+    sq = np.where(Q*sq.real > 0, -sq, sq)
+    pp = -Q/2+sq
     w_p = cuberoot(pp)
-    w_m = cuberoot(mm)
+    w_m = np.where(w_p == 0, 0, -P/3/np.where(w_p == 0, 1, w_p))
 
     # Eqs. (A6 P2)
     z = np.sqrt((w_p+w_m)/2 - A/6)
@@ -107,7 +110,8 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     E_prime = (ellipe(k)-K)/2/k
     PI = ellippi(u_p,np.pi/2,k)
     
-    arg = (np.arcsin(np.cos(theta_o)/np.sqrt(u_p)))
+    # cos(theta_o)/sqrt(u_p) -> 1 as beta -> 0 (turning point at the observer); clip the rounding
+    arg = (np.arcsin(np.clip(np.cos(theta_o)/np.sqrt(u_p),-1,1)))
     
     # Eqs. (12-14 P2)
     F_o = ellipf(arg,k)
@@ -538,7 +542,9 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     beta = grid[:,1][mask]
 
     lam,eta = conserved_quantities(alpha,beta,theta_o,a)
-    pm_o = np.sign(beta)
+    # sign of p_theta at the observer, with H(0) = 1 as in angular_integrals: at beta = 0 the
+    # observer sits at a turning point and both one-sided limits give G_theta = (2 mbar + 1) K
+    pm_o = np.where(beta>=0,1.0,-1.0)
     r1,r2,r3,r4 = radial_turning_points(alpha,beta,lam,eta,a)
     mask2 = np.ones(r1.shape,dtype=bool)
     #Condition for turning points
@@ -554,7 +560,10 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     k = r32*r41/r31/r42
     taumax = np.zeros(alpha.shape)
     #Turn
-    Jmax = 2/sqrt(r31[mask2]*r42[mask2])*ellipf(np.arcsin(np.sqrt(r31[mask2]/r41[mask2])).real, k[mask2].real)
+    # Mino time from the observer at `distance` to the turning point r4: the radial integrals
+    # start at `distance`, so the emitted radial sign flips where G_theta passes this time
+    x2o = np.sqrt((distance - r4[mask2])/(distance - r3[mask2])*r31[mask2]/r41[mask2])
+    Jmax = 2/sqrt(r31[mask2]*r42[mask2])*ellipf(np.arcsin(x2o).real, k[mask2].real)
     taumax[mask2]=Jmax.real
     
     r_sign0 = np.ones(taumax[mask2].shape)
