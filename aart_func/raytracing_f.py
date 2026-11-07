@@ -107,7 +107,8 @@ def angular_integrals(mbar,beta,u_p,u_m,theta_p,theta_m,pm_o,theta_o,a):
     E_prime = (ellipe(k)-K)/2/k
     PI = ellippi(u_p,np.pi/2,k)
     
-    arg = (np.arcsin(np.cos(theta_o)/np.sqrt(u_p)))
+    # cos(theta_o)/sqrt(u_p) -> 1 as beta -> 0 (turning point at the observer); clip the rounding
+    arg = (np.arcsin(np.clip(np.cos(theta_o)/np.sqrt(u_p),-1,1)))
     
     # Eqs. (12-14 P2)
     F_o = ellipf(arg,k)
@@ -538,7 +539,9 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     beta = grid[:,1][mask]
 
     lam,eta = conserved_quantities(alpha,beta,theta_o,a)
-    pm_o = np.sign(beta)
+    # sign of p_theta at the observer, with H(0) = 1 as in angular_integrals: at beta = 0 the
+    # observer sits at a turning point and both one-sided limits give G_theta = (2 mbar + 1) K
+    pm_o = np.where(beta>=0,1.0,-1.0)
     r1,r2,r3,r4 = radial_turning_points(alpha,beta,lam,eta,a)
     mask2 = np.ones(r1.shape,dtype=bool)
     #Condition for turning points
