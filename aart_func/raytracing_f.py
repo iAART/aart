@@ -557,7 +557,10 @@ def calculate_observables(grid,mask,theta_o,a,mbar,distance=1000):
     k = r32*r41/r31/r42
     taumax = np.zeros(alpha.shape)
     #Turn
-    Jmax = 2/sqrt(r31[mask2]*r42[mask2])*ellipf(np.arcsin(np.sqrt(r31[mask2]/r41[mask2])).real, k[mask2].real)
+    # Mino time from the observer at `distance` to the turning point r4: the radial integrals
+    # start at `distance`, so the emitted radial sign flips where G_theta passes this time
+    x2o = np.sqrt((distance - r4[mask2])/(distance - r3[mask2])*r31[mask2]/r41[mask2])
+    Jmax = 2/sqrt(r31[mask2]*r42[mask2])*ellipf(np.arcsin(x2o).real, k[mask2].real)
     taumax[mask2]=Jmax.real
     
     r_sign0 = np.ones(taumax[mask2].shape)
